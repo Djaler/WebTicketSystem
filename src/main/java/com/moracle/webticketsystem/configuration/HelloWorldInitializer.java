@@ -1,28 +1,25 @@
 package com.moracle.webticketsystem.configuration;
 
-import org.springframework.web.WebApplicationInitializer;
-import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
-import org.springframework.web.servlet.DispatcherServlet;
-
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRegistration;
+import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 /**
  * Created by djaler on 04.08.16.
  */
-public class HelloWorldInitializer implements WebApplicationInitializer {
+public class HelloWorldInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
-    public void onStartup(ServletContext container) throws ServletException {
+    @Override
+    protected Class<?>[] getRootConfigClasses() {
+        return new Class[]{HelloWorldConfiguration.class};
+    }
 
-        AnnotationConfigWebApplicationContext ctx = new AnnotationConfigWebApplicationContext();
-        ctx.register(HelloWorldConfiguration.class);
-        ctx.setServletContext(container);
+    @Override
+    protected Class<?>[] getServletConfigClasses() {
+        return null;
+    }
 
-        ServletRegistration.Dynamic servlet = container.addServlet("dispatcher", new DispatcherServlet(ctx));
-
-        servlet.setLoadOnStartup(1);
-        servlet.addMapping("/");
+    @Override
+    protected String[] getServletMappings() {
+        return new String[]{"/"};
     }
 
 }
