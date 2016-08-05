@@ -1,6 +1,8 @@
 package com.moracle.webticketsystem.model.entity;
 
 
+import com.moracle.webticketsystem.model.enums.RoleEnum;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -14,19 +16,19 @@ public class Role implements Serializable{
     private int id;
     private String role;
 
-    /*public Role(int id, RoleEnum roleEnum) {
+    public Role(int id, RoleEnum roleEnum) {
         this(id, roleEnum.toString());
     }
-*/
+
     public Role(int id, String role) {
         this();
         setId(id);
         setRole(role);
     }
 
-   /* public Role(RoleEnum roleEnum) {
+    public Role(RoleEnum roleEnum) {
         this(roleEnum.toString());
-    }*/
+    }
 
     public Role(String role) {
         this();
