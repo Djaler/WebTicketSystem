@@ -20,8 +20,6 @@ public class StatusServiceImpl implements StatusService {
     @Autowired
     private StatusRepository statusRepository;
 
-    private Map<String, Integer> statusesMap = new HashMap<>(StatusEnum.getStatuses().length);
-
     @Override
     public Status addStatus(Status status) {
         return statusRepository.save(status);
@@ -37,16 +35,15 @@ public class StatusServiceImpl implements StatusService {
         statusRepository.delete(id);
     }
 
-    @Override
-    public Status getByEnum(StatusEnum statusEnum) {
-        return new Status(statusesMap.get(statusEnum.toString()), statusEnum.toString());
-    }
-
     @PostConstruct
     public void init() {
+        Map<String, Integer> idMap = new HashMap<>(StatusEnum.getStatuses().length);
+
         for (String status : StatusEnum.getStatuses()) {
             int statusId = statusRepository.findByStatus(status).getId();
-            statusesMap.put(status, statusId);
+            idMap.put(status, statusId);
         }
+
+        StatusEnum.setIdMap(idMap);
     }
 }
