@@ -15,7 +15,7 @@
         <jbcrypt.version>0.3m</jbcrypt.version>
         <tomcat-servlet-api.version>9.0.0.M9</tomcat-servlet-api.version>
         <spring-data-jpa.version>1.10.1.RELEASE</spring-data-jpa.version>
-        <thymeleaf-spring4.version>3.0.1.RELEASE</thymeleaf-spring4.version>
+        <thymeleaf.version>3.0.1.RELEASE</thymeleaf.version>
     </properties>
 
     <dependencies>
@@ -83,8 +83,14 @@
 
         <dependency>
             <groupId>org.thymeleaf</groupId>
+            <artifactId>thymeleaf</artifactId>
+            <version>${thymeleaf.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.thymeleaf</groupId>
             <artifactId>thymeleaf-spring4</artifactId>
-            <version>${thymeleaf-spring4.version}</version>
+            <version>${thymeleaf.version}</version>
         </dependency>
 
     </dependencies>
