@@ -1,9 +1,5 @@
 package com.moracle.webticketsystem.configuration;
 
-import com.moracle.webticketsystem.model.service.PriorityService;
-import com.moracle.webticketsystem.model.service.RoleService;
-import com.moracle.webticketsystem.model.service.impl.PriorityServiceImpl;
-import com.moracle.webticketsystem.model.service.impl.RoleServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -40,16 +36,6 @@ public class WebTicketSystemConfiguration{
         viewResolver.setPrefix("/WEB-INF/view/");
         viewResolver.setSuffix(".jsp");
         return viewResolver;
-    }
-
-    @Bean(initMethod = "init")
-    public RoleService roleService(){
-        return new RoleServiceImpl();
-    }
-
-    @Bean(initMethod = "init")
-    public PriorityService priorityService() {
-        return new PriorityServiceImpl();
     }
 
     @Bean

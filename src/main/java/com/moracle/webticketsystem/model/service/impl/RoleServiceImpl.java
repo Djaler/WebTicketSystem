@@ -7,6 +7,7 @@ import com.moracle.webticketsystem.model.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,6 +42,7 @@ public class RoleServiceImpl implements RoleService {
         return new Role(rolesMap.get(roleEnum.toString()), roleEnum.toString());
     }
 
+    @PostConstruct
     public void init(){
         for(String role : RoleEnum.getRoles()){
             int roleId = roleRepository.findByRole(role).getId();

@@ -2,12 +2,12 @@ package com.moracle.webticketsystem.model.service.impl;
 
 import com.moracle.webticketsystem.model.entity.Priority;
 import com.moracle.webticketsystem.model.enums.PriorityEnum;
-import com.moracle.webticketsystem.model.enums.RoleEnum;
 import com.moracle.webticketsystem.model.repository.PriorityRepository;
 import com.moracle.webticketsystem.model.service.PriorityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,10 +42,11 @@ public class PriorityServiceImpl implements PriorityService {
         return new Priority(prioritiesMap.get(priorityEnum.toString()),priorityEnum.toString());
     }
 
+    @PostConstruct
     public void init(){
         for(String priority : PriorityEnum.getPriorities()){
-            int priorutyId = priorityRepository.findByPriority(priority).getId();
-            prioritiesMap.put(priority, priorutyId);
+            int priorityId = priorityRepository.findByPriority(priority).getId();
+            prioritiesMap.put(priority, priorityId);
         }
     }
 }
