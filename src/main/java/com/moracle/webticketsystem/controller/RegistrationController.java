@@ -1,5 +1,6 @@
 package com.moracle.webticketsystem.controller;
 
+import com.moracle.webticketsystem.model.entity.Role;
 import com.moracle.webticketsystem.model.entity.User;
 import com.moracle.webticketsystem.model.enums.RoleEnum;
 import com.moracle.webticketsystem.model.exception.UserAlreadyExists;
@@ -25,7 +26,7 @@ public class RegistrationController {
     private RoleService roleService;
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
-    public String registration(HttpSession session){
+    public String registration(HttpSession session) {
         User user = (User) session.getAttribute("user");
         if (user != null) {
             return "redirect:/tickets";
@@ -35,14 +36,14 @@ public class RegistrationController {
 
     @RequestMapping(value = "/doregistration", method = RequestMethod.POST)
     public String doRegistration(@RequestParam String login, @RequestParam String pass, @RequestParam String name,
-            HttpSession session){
+                                 HttpSession session) {
         User user = (User) session.getAttribute("user");
         if (user != null) {
             return "redirect:/tickets";
         }
         try {
-            userService.registrationNewUser(login, pass, name, roleService.getByEnum(RoleEnum.USER));
-        }catch(UserAlreadyExists ex){
+            userService.registrationNewUser(login, pass, name, new Role(RoleEnum.USER.toID(), RoleEnum.USER));
+        } catch (UserAlreadyExists ex) {
             return "redirect:/registration";
         }
         session.setAttribute("user", userService.getByLogin(login));

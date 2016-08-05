@@ -20,8 +20,6 @@ public class PriorityServiceImpl implements PriorityService {
     @Autowired
     private PriorityRepository priorityRepository;
 
-    private Map<String, Integer> prioritiesMap = new HashMap<>(PriorityEnum.getPriorities().length);
-
     @Override
     public Priority addPriority(Priority priority) {
         return priorityRepository.save(priority);
@@ -37,16 +35,15 @@ public class PriorityServiceImpl implements PriorityService {
         priorityRepository.delete(id);
     }
 
-    @Override
-    public Priority getByEnum(PriorityEnum priorityEnum) {
-        return new Priority(prioritiesMap.get(priorityEnum.toString()),priorityEnum.toString());
-    }
-
     @PostConstruct
     public void init(){
+        Map<String, Integer> idMap = new HashMap<>(PriorityEnum.getPriorities().length);
+
         for(String priority : PriorityEnum.getPriorities()){
             int priorityId = priorityRepository.findByPriority(priority).getId();
-            prioritiesMap.put(priority, priorityId);
+            idMap.put(priority, priorityId);
         }
+
+        PriorityEnum.setIdMap(idMap);
     }
 }

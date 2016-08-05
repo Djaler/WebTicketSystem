@@ -20,8 +20,6 @@ public class RoleServiceImpl implements RoleService {
     @Autowired
     private RoleRepository roleRepository;
 
-    private Map<String, Integer> rolesMap = new HashMap<>(RoleEnum.getRoles().length);
-
     @Override
     public Role addRole(Role role) {
         return roleRepository.save(role);
@@ -37,16 +35,15 @@ public class RoleServiceImpl implements RoleService {
         roleRepository.delete(id);
     }
 
-    @Override
-    public Role getByEnum(RoleEnum roleEnum) {
-        return new Role(rolesMap.get(roleEnum.toString()), roleEnum.toString());
-    }
-
     @PostConstruct
     public void init(){
+        Map<String, Integer> idMap = new HashMap<>(RoleEnum.getRoles().length);
+
         for(String role : RoleEnum.getRoles()){
             int roleId = roleRepository.findByRole(role).getId();
-            rolesMap.put(role, roleId);
+            idMap.put(role, roleId);
         }
+
+        RoleEnum.setIdMap(idMap);
     }
 }
