@@ -9,7 +9,7 @@ import java.io.Serializable;
  * Created by djaler on 05.08.16.
  */
 @Entity
-@Table(name = "role")
+@Table(name = "status")
 public class Status implements Serializable {
     private static final long serialVersionUID = 1L;
     private int id;
