@@ -3,6 +3,7 @@
 <html>
 <head>
     <meta charset=utf-8/>
+    <link href="/css/master.css" rel="stylesheet" type="text/css"/>
     <title>Вход</title>
 </head>
 <body>

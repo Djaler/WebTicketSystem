@@ -14,6 +14,8 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import javax.persistence.EntityManagerFactory;
@@ -29,7 +31,7 @@ import java.util.Properties;
 @ComponentScan(basePackages = "com.moracle.webticketsystem")
 @EnableJpaRepositories("com.moracle.webticketsystem.model.repository")
 @EnableTransactionManagement
-public class WebTicketSystemConfiguration{
+public class WebTicketSystemConfiguration extends WebMvcConfigurerAdapter {
     @Bean
     public ViewResolver viewResolver() {
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
@@ -46,8 +48,7 @@ public class WebTicketSystemConfiguration{
 
         JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
-        //em.setJpaProperties(additionalProperties());
-
+        em.setJpaProperties(additionalProperties());
         return em;
     }
 
@@ -80,5 +81,10 @@ public class WebTicketSystemConfiguration{
         return properties;
     }
 
-
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/css/**").addResourceLocations("classpath:/css/");
+        registry.addResourceHandler("/js/**").addResourceLocations("classpath:/js/");
+        registry.addResourceHandler("/img/**").addResourceLocations("classpath:/img/");
+    }
 }
