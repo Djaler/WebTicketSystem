@@ -38,7 +38,7 @@ public class PriorityServiceImpl implements PriorityService {
     }
 
     @Override
-    public Priority getbyEnum(PriorityEnum priorityEnum) {
+    public Priority getByEnum(PriorityEnum priorityEnum) {
         return new Priority(prioritiesMap.get(priorityEnum.toString()),priorityEnum.toString());
     }
 

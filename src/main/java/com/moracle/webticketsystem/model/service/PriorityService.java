@@ -10,5 +10,6 @@ public interface PriorityService {
     Priority addPriority(Priority priority);
     Priority updatePriority(Priority priority);
     void deletePriority(int id);
-    Priority getbyEnum(PriorityEnum priorityEnum);
+    Priority getByEnum(PriorityEnum priorityEnum);
+
 }

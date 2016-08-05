@@ -11,6 +11,6 @@ public interface UserService {
     User registrationNewUser(String login, String pass, String name, Role role) throws UserAlreadyExists;
     User registrationNewUser(User user) throws UserAlreadyExists;
     User login(String login, String pass);
-    void update(User user);
+    User update(User user);
     User getByLogin(String login);
 }
