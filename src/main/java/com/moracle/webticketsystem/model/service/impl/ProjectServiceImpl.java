@@ -1,18 +1,23 @@
 package com.moracle.webticketsystem.model.service.impl;
 
 import com.moracle.webticketsystem.model.entity.Project;
-import com.moracle.webticketsystem.model.repository.PriorityRepository;
 import com.moracle.webticketsystem.model.repository.ProjectRepository;
 import com.moracle.webticketsystem.model.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * Created by boggard on 05.08.2016.
  */
+@Service
 public class ProjectServiceImpl implements ProjectService {
 
+    private final ProjectRepository projectRepository;
+
     @Autowired
-    private ProjectRepository projectRepository;
+    public ProjectServiceImpl(ProjectRepository projectRepository) {
+        this.projectRepository = projectRepository;
+    }
 
     @Override
     public Project addProject(Project project) {

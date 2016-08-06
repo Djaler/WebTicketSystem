@@ -64,25 +64,17 @@ public class Priority implements Serializable{
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass() && o.getClass() != Priority.class) {
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
 
         if (getClass() == o.getClass()) {
-            Priority prior = (Priority) o;
+            Priority priority1 = (Priority) o;
 
-            if (id != prior.id) {
+            if (id != priority1.id) {
                 return false;
             }
-            if (!prior.equals(prior.priority)) {
-                return false;
-            }
-        }
-
-        if (o.getClass() == PriorityEnum.class) {
-            //noinspection ConstantConditions
-            PriorityEnum prior = (PriorityEnum) o;
-            if (!getPriority().equals(prior.toString())) {
+            if (priority != null ? !priority.equals(priority1.priority) : priority1.priority != null) {
                 return false;
             }
         }

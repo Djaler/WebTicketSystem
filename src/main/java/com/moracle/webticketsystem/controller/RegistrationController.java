@@ -4,7 +4,6 @@ import com.moracle.webticketsystem.model.entity.Role;
 import com.moracle.webticketsystem.model.entity.User;
 import com.moracle.webticketsystem.model.enums.RoleEnum;
 import com.moracle.webticketsystem.model.exception.UserAlreadyExists;
-import com.moracle.webticketsystem.model.service.RoleService;
 import com.moracle.webticketsystem.model.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,10 +19,12 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class RegistrationController {
 
+    private final UserService userService;
+
     @Autowired
-    private UserService userService;
-    @Autowired
-    private RoleService roleService;
+    public RegistrationController(UserService userService) {
+        this.userService = userService;
+    }
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registration(HttpSession session) {

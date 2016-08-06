@@ -17,8 +17,12 @@ import java.util.Map;
 @Service
 public class PriorityServiceImpl implements PriorityService {
 
+    private final PriorityRepository priorityRepository;
+
     @Autowired
-    private PriorityRepository priorityRepository;
+    public PriorityServiceImpl(PriorityRepository priorityRepository) {
+        this.priorityRepository = priorityRepository;
+    }
 
     @Override
     public Priority addPriority(Priority priority) {

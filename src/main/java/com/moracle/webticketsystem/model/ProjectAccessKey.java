@@ -7,12 +7,12 @@ import java.io.Serializable;
  */
 public class ProjectAccessKey implements Serializable {
     static final long serialVersionUID = 1L;
-
+    private int id_project;
+    private int id_user;
     public ProjectAccessKey() {
 
     }
 
-    private int id_project;
     public int getIdProject() {
         return id_project;
     }
@@ -21,7 +21,6 @@ public class ProjectAccessKey implements Serializable {
         this.id_project=id_project;
     }
 
-    private int id_user;
     public int getIdUser() {
         return id_user;
     }
@@ -44,6 +43,7 @@ public class ProjectAccessKey implements Serializable {
         if (id_project != project_access_key.id_project) {
             return false;
         }
+        //noinspection RedundantIfStatement
         if (id_user != project_access_key.id_user) {
             return false;
         }
@@ -52,8 +52,8 @@ public class ProjectAccessKey implements Serializable {
 
     @Override
     public int hashCode() {
-        int result = id_project;
-        result = 31 * id_user;
+        int result;
+        result = 31 * id_user * id_project;
         return result;
     }
 }

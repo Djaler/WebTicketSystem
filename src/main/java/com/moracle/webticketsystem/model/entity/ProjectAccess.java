@@ -61,6 +61,7 @@ public class ProjectAccess implements Serializable {
         if (id_project != project_access.id_project) {
             return false;
         }
+        //noinspection RedundantIfStatement
         if (id_user != project_access.id_user) {
             return false;
         }
@@ -69,8 +70,8 @@ public class ProjectAccess implements Serializable {
 
     @Override
     public int hashCode() {
-        int result = id_project;
-        result = 31 * id_user;
+        int result;
+        result = 31 * id_user * id_project;
         return result;
     }
 }

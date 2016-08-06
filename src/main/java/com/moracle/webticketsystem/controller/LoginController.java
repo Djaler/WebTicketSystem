@@ -16,8 +16,12 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class LoginController {
 
+    private final UserService userService;
+
     @Autowired
-    private UserService userService;
+    public LoginController(UserService userService) {
+        this.userService = userService;
+    }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index(HttpSession session) {

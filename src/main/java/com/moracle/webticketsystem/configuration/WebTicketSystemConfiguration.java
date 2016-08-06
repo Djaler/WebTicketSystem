@@ -75,6 +75,7 @@ public class WebTicketSystemConfiguration extends WebMvcConfigurerAdapter implem
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
+        //noinspection RedundantArrayCreation
         em.setPackagesToScan(new String[] { "com.moracle.webticketsystem.model.entity" });
 
         JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
@@ -87,8 +88,8 @@ public class WebTicketSystemConfiguration extends WebMvcConfigurerAdapter implem
     public DataSource dataSource(){
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/ticket_system");
-        dataSource.setUsername( "root" );
+        dataSource.setUrl("jdbc:mysql://178.62.251.252:3306/ticket_system");
+        dataSource.setUsername("user");
         dataSource.setPassword( "javathebest" );
         return dataSource;
     }

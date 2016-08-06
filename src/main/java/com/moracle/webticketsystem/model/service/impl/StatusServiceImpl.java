@@ -17,8 +17,12 @@ import java.util.Map;
 @Service
 public class StatusServiceImpl implements StatusService {
 
+    private final StatusRepository statusRepository;
+
     @Autowired
-    private StatusRepository statusRepository;
+    public StatusServiceImpl(StatusRepository statusRepository) {
+        this.statusRepository = statusRepository;
+    }
 
     @Override
     public Status addStatus(Status status) {

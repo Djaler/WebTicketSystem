@@ -20,7 +20,7 @@ public class ProjectTicketController {
         if (user == null) {
             return "redirect:/";
         }
-        model.addAttribute("userLogin", user.getLogin());
+        model.addAttribute("user", user);
         return "projectTicket";
     }
 }
