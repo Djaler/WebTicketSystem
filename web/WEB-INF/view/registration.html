@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
 <head th:replace="fragments/head :: head(~{::title},~{::link})">
     <title th:text="#{registrationPage.title}"></title>
 </head>
@@ -27,7 +27,7 @@
                 </div>
                 <div class="form-group">
                     <label th:text="#{lable.username}">Pass</label>
-                    <input name="name"  class="form-control" type="text" required>
+                    <input name="name" class="form-control" type="text" required>
                 </div>
                 <div class="row">
                     <div class="col-xs-6 col-sm-4 col-sm-offset-2 col-md-5 col-md-offset-1">

@@ -21,13 +21,13 @@ public class AdminPanelController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public String admin(){
+    public String admin() {
         return "adminPanel";
     }
 
     @RequestMapping(value = "/addusertoproject", method = RequestMethod.GET)
-    public String addUserToProject(){
-        projectAccessService.addLink(5,5);
+    public String addUserToProject() {
+        projectAccessService.addLink(5, 5);
         return "adminPanel";
     }
 }

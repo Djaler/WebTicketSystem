@@ -68,7 +68,7 @@ public class ViewResolverConfig extends WebMvcConfigurerAdapter implements Appli
     }
 
     @Bean
-    public LocaleResolver localeResolver(){
+    public LocaleResolver localeResolver() {
         CookieLocaleResolver cookieLocaleResolver = new CookieLocaleResolver();
         cookieLocaleResolver.setCookieName("language");
         cookieLocaleResolver.setCookieMaxAge(-1);

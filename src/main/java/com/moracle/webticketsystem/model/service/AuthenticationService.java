@@ -27,10 +27,10 @@ public class AuthenticationService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         User user = userService.getByLogin(s);
-        if(user == null){
+        if (user == null) {
             return null;
         }
-        GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_"+user.getRole().getRole());
+        GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + user.getRole().getRole());
         UserDetails userDetails = new org.springframework.security.core.userdetails.User(user.getLogin(),
                 user.passwordAsString(), Arrays.asList(authority));
         return userDetails;

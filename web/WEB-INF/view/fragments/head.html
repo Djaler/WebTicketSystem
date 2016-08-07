@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
 <head th:fragment="head(title,links)">
     <title th:replace="${title}"></title>
 
@@ -9,7 +9,7 @@
           th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" rel='stylesheet'/>
     <link th:href="@{/css/master.css}" rel="stylesheet" type="text/css"/>
     <th:block th:if="${links != null}">
-        <th:block th:replace="${links}" />
+        <th:block th:replace="${links}"/>
     </th:block>
 </head>
 </html>
