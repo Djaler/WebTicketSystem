@@ -1,13 +1,11 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset=utf-8/>
-    <title>Тикеты</title>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head(~{::title},~{::link})">
+    <title th:text="#{ticketsPage.title}">Tickets</title>
 </head>
 <body>
-<div align="center">
-    <p>User: [[${user.login}]] <a href="/logout">Выход</a></p>
-</div>
+<header th:replace="fragments/header :: header"/>
 
+<footer th:replace="fragments/footer :: footer"/>
 </body>
 </html>

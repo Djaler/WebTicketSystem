@@ -10,7 +10,6 @@ import com.moracle.webticketsystem.model.exception.UserAlreadyExists;
 public interface UserService {
     User registrationNewUser(String login, String pass, String name, Role role) throws UserAlreadyExists;
     User registrationNewUser(User user) throws UserAlreadyExists;
-    User login(String login, String pass);
     User update(User user);
     User getByLogin(String login);
 }

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(title,links)">
+    <title th:replace="${title}"></title>
+
+    <meta charset=utf-8/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link href="webjars/bootstrap/3.3.7/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" rel='stylesheet'/>
+    <link th:href="@{/css/master.css}" rel="stylesheet" type="text/css"/>
+    <th:block th:if="${links != null}">
+        <th:block th:replace="${links}" />
+    </th:block>
+</head>
+</html>

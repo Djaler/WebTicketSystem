@@ -38,15 +38,6 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User login(String login, String pass) {
-        User user = getByLogin(login);
-        if (user != null && PasswordUtil.checkPassword(pass, user.passwordAsString())) {
-            return user;
-        }
-        return null;
-    }
-
-    @Override
     public User update(User user) {
         return userRepository.saveAndFlush(user);
     }

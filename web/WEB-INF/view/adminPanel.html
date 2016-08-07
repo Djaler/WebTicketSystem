@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head(~{::title},~{::link})">
+    <title th:text="#{adminPanelPage.title}"></title>
+</head>
+<body>
+<header th:replace="fragments/header :: header"/>
+
+<div class="container">
+    <div class = "row">
+        <div class="col-xs-4 col-xs-offset-4">
+            <p class="text-success" th:text="#{admin.tmpMsg}"></p>
+        </div>
+    </div>
+    <div class = "row">
+        <div class="col-xs-4 col-xs-offset-4">
+            <a class="btn btn-default btn-block" th:href="@{/admin/addusertoproject}" th:text="#{admin.tmpMsg2}"></a>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="fragments/footer :: footer"/>
+</body>
+</html>

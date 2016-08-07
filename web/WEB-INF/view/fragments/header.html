@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<header th:fragment="header" class="navbar-inverse" role="banner">
+    <nav role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" th:href="@{/tickets}" th:text="#{system.name}">Web Ticket System</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-collapse-1"
+                 th:with="currentUrl=(${#httpServletRequest.requestURI})">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">
+                            <th:block th:switch="__${#locale}__">
+                                <img th:case="'ru'" class="img-flag ru-flag">
+                                <img th:case="'en'" class="img-flag uk-flag">
+                            </th:block>
+                            <span class="caret"></span></a>
+                        <ul class="dropdown-menu" style="min-width: 0px">
+                            <li><a th:href="@{${currentUrl}(lang=ru)}"><img class="img-flag ru-flag"></a></li>
+                            <li><a th:href="@{${currentUrl}(lang=en)}"><img class="img-flag uk-flag"></a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <th:block th:if="${session.user != null}">
+                    <a class="btn btn-default navbar-btn navbar-right" th:href="@{/logout}" th:text="#{button.logout}">Выйти</a>
+                    <p class="navbar-text navbar-right" style="margin-right: 30px !important;"
+                       th:text="${session.user.login}"></p>
+                    <ul th:if="${session.user.role.role == 'Admin'}" class="nav navbar-nav navbar-right">
+                        <li><a th:href="@{/admin}" th:text="#{button.adminPanel}"></a></li>
+                    </ul>
+                </th:block>
+            </div>
+        </div>
+    </nav>
+</header>
+</html>
