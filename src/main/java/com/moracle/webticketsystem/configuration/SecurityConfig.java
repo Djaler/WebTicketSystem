@@ -12,7 +12,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 /**
@@ -38,6 +37,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/css/**", "/js/**", "/img/**", "/webjars/**").permitAll()
                 .antMatchers("/registration").permitAll()
+                .antMatchers("/login").permitAll() //ЭТО нужно чтоб работало изменение
+                //языка на логин пейдже
                 .antMatchers("/admin/**").hasRole(RoleEnum.ADMIN.toString())
                 .anyRequest().authenticated()
                 .and()
@@ -51,11 +52,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .invalidateHttpSession(true)
                 .logoutSuccessUrl("/")
                 .permitAll();
-    }
-
-    @Bean
-    public AuthenticationSuccessHandler authenticationSuccessHandler() {
-        return new AuthSuccessHandler();
     }
 
     @Bean
