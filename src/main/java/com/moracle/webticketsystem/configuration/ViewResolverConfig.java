@@ -64,7 +64,7 @@ public class ViewResolverConfig extends WebMvcConfigurerAdapter implements Appli
     @Bean
     public MessageSource messageSource() {
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-        messageSource.setBasename("classpath:/locale/messages");
+        messageSource.setBasenames("classpath:/locale/messages","classpath:app.properties");
         messageSource.setDefaultEncoding("UTF-8");
         return messageSource;
     }
