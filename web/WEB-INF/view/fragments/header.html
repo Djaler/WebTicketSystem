@@ -34,7 +34,7 @@
                     <a class="btn btn-default navbar-btn navbar-right" th:href="@{/logout}" th:text="#{button.logout}">Выйти</a>
                     <p class="navbar-text navbar-right" style="margin-right: 30px !important;"
                        th:text="${session.user.login}"></p>
-                    <ul th:if="${session.user.role.role == 'Admin'}" class="nav navbar-nav navbar-right">
+                    <ul th:if="${session.user.role.role eq #{roles.admin}}" class="nav navbar-nav navbar-right">
                         <li><a th:href="@{/admin}" th:text="#{button.adminPanel}"></a></li>
                     </ul>
                 </th:block>

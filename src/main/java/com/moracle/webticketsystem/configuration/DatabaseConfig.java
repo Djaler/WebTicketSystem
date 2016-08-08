@@ -2,6 +2,8 @@ package com.moracle.webticketsystem.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -11,6 +13,7 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.util.Properties;
@@ -20,6 +23,7 @@ import java.util.Properties;
  */
 @Configuration
 @EnableTransactionManagement
+@PropertySource("classpath:app.properties")
 public class DatabaseConfig {
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
@@ -33,13 +37,16 @@ public class DatabaseConfig {
         return em;
     }
 
+    @Inject
+    Environment env;
+
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/ticket_system");
-        dataSource.setUsername("root");
-        dataSource.setPassword("javathebest");
+        dataSource.setDriverClassName(env.getProperty("dataSource.driver"));
+        dataSource.setUrl(env.getProperty("dataSource.url"));
+        dataSource.setUsername(env.getProperty("dataSource.username"));
+        dataSource.setPassword(env.getProperty("dataSource.password"));
         return dataSource;
     }
 
