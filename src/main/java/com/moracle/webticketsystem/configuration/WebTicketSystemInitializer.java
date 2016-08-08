@@ -1,6 +1,7 @@
 package com.moracle.webticketsystem.configuration;
 
 import org.springframework.web.WebApplicationInitializer;
+import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
@@ -23,6 +24,8 @@ public class WebTicketSystemInitializer implements WebApplicationInitializer {
 
         servlet.setLoadOnStartup(1);
         servlet.addMapping("/");
+
+        container.addListener(new ContextLoaderListener(ctx));
     }
 
 }

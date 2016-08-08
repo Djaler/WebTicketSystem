@@ -31,14 +31,14 @@
                         </ul>
                     </li>
                 </ul>
-                <th:block th:if="${session.user != null}">
+                <div sec:authorize="isAuthenticated()">
                     <a class="btn btn-default navbar-btn navbar-right" th:href="@{/logout}" th:text="#{button.logout}">Выйти</a>
                     <p class="navbar-text navbar-right" style="margin-right: 30px !important;"
-                       th:text="${session.user.login}"></p>
+                       sec:authentication="name"></p>
                     <ul sec:authorize="hasRole('ROLE_Admin')" class="nav navbar-nav navbar-right">
                         <li><a th:href="@{/admin}" th:text="#{button.adminPanel}"></a></li>
                     </ul>
-                </th:block>
+                </div>
             </div>
         </div>
     </nav>
