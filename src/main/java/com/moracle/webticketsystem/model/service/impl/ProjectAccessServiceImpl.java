@@ -5,7 +5,6 @@ import com.moracle.webticketsystem.model.entity.ProjectAccess;
 import com.moracle.webticketsystem.model.repository.ProjectAccessRepository;
 import com.moracle.webticketsystem.model.service.ProjectAccessService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 /**
@@ -18,7 +17,6 @@ public class ProjectAccessServiceImpl implements ProjectAccessService{
     ProjectAccessRepository projectAccessRepository;
 
     @Override
-    @PreAuthorize("hasAuthority('ROLE_Admin')")
     public ProjectAccess addLink(int id_project, int id_user) {
         //return projectAccessRepository.save(new ProjectAccess(id_project,id_user));
         return null;
