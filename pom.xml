@@ -16,6 +16,7 @@
         <tomcat-servlet-api.version>9.0.0.M9</tomcat-servlet-api.version>
         <spring-data-jpa.version>1.10.1.RELEASE</spring-data-jpa.version>
         <thymeleaf.version>3.0.1.RELEASE</thymeleaf.version>
+        <thymeleaf-extras.version>3.0.0.RELEASE</thymeleaf-extras.version>
         <jquery.version>3.1.0</jquery.version>
         <bootstrap.version>3.3.7</bootstrap.version>
         <spring-security.version>4.1.1.RELEASE</spring-security.version>
@@ -94,6 +95,12 @@
             <groupId>org.thymeleaf</groupId>
             <artifactId>thymeleaf-spring4</artifactId>
             <version>${thymeleaf.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.thymeleaf.extras</groupId>
+            <artifactId>thymeleaf-extras-springsecurity4</artifactId>
+            <version>${thymeleaf-extras.version}</version>
         </dependency>
 
         <dependency>
