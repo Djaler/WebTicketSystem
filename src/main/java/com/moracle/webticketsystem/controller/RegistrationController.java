@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.security.Principal;
+
 /**
  * Created by dmitry on 7/27/2016.
  */
@@ -22,8 +24,17 @@ public class RegistrationController {
     private UserService userService;
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
-    public String registration() {
+    public String registration(Principal principal) {
+        if (principal != null) {
+            return "redirect:/";
+        }
 
+        /* ИЛИ можно вот так. Тогда Principal не нужен
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if ((auth instanceof AnonymousAuthenticationToken) == false) {
+            return "redirect:/";
+        }
+        */
         return "registration";
     }
 

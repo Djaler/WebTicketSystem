@@ -1,12 +1,11 @@
 package com.moracle.webticketsystem.controller;
 
-import com.moracle.webticketsystem.model.entity.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.servlet.http.HttpSession;
+import java.security.Principal;
 
 /**
  * Created by dmitry on 7/27/2016.
@@ -14,13 +13,19 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class ProjectTicketController {
 
-    @RequestMapping(value = "/tickets", method = RequestMethod.GET)
-    public String tickets(HttpSession session, Model model){
-        User user = (User) session.getAttribute("user");
-        if (user == null) {
-            return "redirect:/";
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public String tickets(Model model, Principal principal) {
+
+        if (principal == null) {
+            return "redirect:/login";
         }
-        model.addAttribute("user", user);
+
+        /* ИЛИ можно вот так. Тогда Principal не нужен
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if ((auth instanceof AnonymousAuthenticationToken) == true) {
+            return "redirect:/login";
+        }
+        */
         return "projectTicket";
     }
 }
