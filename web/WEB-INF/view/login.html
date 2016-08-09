@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
-<head th:replace="fragments/head :: head(~{::title},~{::link})">
+<head th:replace="fragments/head :: head(~{::title},~{::link}, ~{::script})">
     <title th:text="#{loginPage.title}">Вход</title>
+    <link th:href="@{/css/login.css}" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <header th:replace="fragments/header :: header"/>
@@ -13,7 +14,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="login-div col-xs-8 col-xs-offset-2 col-sm-6 col-sm-offset-3 col-lg-4 col-lg-offset-4">
+        <div class="div-default col-xs-8 col-xs-offset-2 col-sm-6 col-sm-offset-3 col-lg-4 col-lg-offset-4">
             <form th:action="@{/login}" method="post" role="form">
                 <div class="form-group">
                     <label for="login" th:text="#{label.login}">Login</label>
