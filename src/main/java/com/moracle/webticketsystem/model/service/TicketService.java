@@ -17,5 +17,5 @@ public interface TicketService {
 
     Ticket getById(int id);
 
-    List<Ticket> getByProject(Project project);
+    List<Ticket> getByProject(Project project, int page, int size);
 }

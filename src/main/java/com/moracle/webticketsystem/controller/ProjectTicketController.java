@@ -23,6 +23,7 @@ public class ProjectTicketController {
 
     private final TicketService ticketService;
     private final ProjectService projectService;
+    private final int ticketsOnPage=15;
 
     @Autowired
     public ProjectTicketController(TicketService ticketService, ProjectService projectService) {
@@ -37,16 +38,42 @@ public class ProjectTicketController {
             return "redirect:/login";
         }
 
+        /* ИЛИ можно вот так. Тогда Principal не нужен
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if ((auth instanceof AnonymousAuthenticationToken) == true) {
+            return "redirect:/login";
+        }
+        */
         List<Project> projects = projectService.getFirst();
-        return "redirect:/project/"+projects.get(0).getId();
+        return "redirect:/project/"+projects.get(0).getId()+"/page1";
     }
 
-    @RequestMapping(value = "/project/{id}", method = RequestMethod.GET)
-    public String tickets(@PathVariable int id, Model model, Principal principal) {
+    @RequestMapping(value = "/project/{id}/page{currentpage}", method = RequestMethod.GET)
+    public String tickets(@PathVariable int id, @PathVariable int currentpage, Model model, Principal principal) {
+
+       /* if (principal == null) {
+            return "redirect:/login";
+        }
+*/
+        /* ИЛИ можно вот так. Тогда Principal не нужен
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if ((auth instanceof AnonymousAuthenticationToken) == true) {
+            return "redirect:/login";
+        }
+        */
+
         List<Project> projects = projectService.getAll();
         model.addAttribute("projects",projects);
-        List<Ticket> tickets = ticketService.getByProject(projectService.getById(id));
+        model.addAttribute("currentpage",currentpage);
+        currentpage--;
+        List<Ticket> tickets = ticketService.getByProject(projectService.getById(id), currentpage, ticketsOnPage);
         model.addAttribute("tickets",tickets);
         return "projectTicket";
+    }
+
+
+    @RequestMapping(value = "/createticket", method = RequestMethod.GET)
+    public String createTicket() {
+        return "createTicket";
     }
 }

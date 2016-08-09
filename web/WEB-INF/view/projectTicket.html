@@ -17,7 +17,7 @@
         <div class="panel panel-default col-md-4 col-lg-4 ">
             <div class="panel-heading">Panel heading</div>
             <div class="project_list list-group" >
-                <a th:href="${project.id}" class="list-group-item" th:each="project: ${projects}" th:text="${project.name}"/>
+                <a th:with="Url=(${'/project/'+project.id+'/page1'})" th:href="@{${Url}}" class="list-group-item" th:each="project: ${projects}" th:text="${project.name}"/>
             </div>
         </div>
         <div class="col-md-8 col-lg-8">
@@ -37,6 +37,10 @@
                     <td th:text="${ticket.assignee != null ? ticket.assignee.name : ''}"/>
                 </tr>
             </table>
+            <ul class="pager">
+                <li><a th:href="${'page'+(currentpage-1).toString()}" th:text="#{button.page.prev}"></a></li>
+                <li><a th:href="${'page'+(currentpage+1).toString()}" th:text="#{button.page.next}"></a></li>
+            </ul>
         </div>
     </div>
 </div>
