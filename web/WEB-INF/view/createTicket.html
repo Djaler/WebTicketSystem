@@ -11,24 +11,24 @@
         <div class="login-div col-xs-8 col-xs-offset-2 col-sm-6 col-sm-offset-3 col-lg-4 col-lg-offset-4">
             <form th:action="@{/createticket}" method="post" role="form">
                 <div class="form-group">
-                    <label th:text="#{lable.ticket.subject}"></label>
+                    <label th:text="#{label.ticket.subject}"></label>
                     <input name="subject" type="text" class="form-control" autofocus required>
                 </div>
                 <div class="form-group">
-                    <label th:text="#{lable.ticket.description}"></label>
+                    <label th:text="#{label.ticket.description}"></label>
                     <textarea class="form-control" name="description" required></textarea>
                 </div>
                 <div class="form-group">
-                    <label th:text="#{lable.ticket.priority}"></label>
+                    <label th:text="#{label.ticket.priority}"></label>
                     <select name="priority" class="form-control">
-                        <option value="Critical" th:text="#{lable.priority.critical}"></option>
-                        <option value="High" th:text="#{lable.priority.high}"></option>
-                        <option selected value="Medium" th:text="#{lable.priority.medium}"></option>
-                        <option value="Low" th:text="#{lable.priority.low}"></option>
+                        <option value="Critical" th:text="#{label.priority.critical}"></option>
+                        <option value="High" th:text="#{label.priority.high}"></option>
+                        <option selected value="Medium" th:text="#{label.priority.medium}"></option>
+                        <option value="Low" th:text="#{label.priority.low}"></option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label th:text="#{lable.attach}"></label>
+                    <label th:text="#{label.attach}"></label>
                 </div>
                 <div class="row">
                     <div class="col-xs-6 col-sm-4 col-sm-offset-2 col-md-5 col-md-offset-1">

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head th:replace="fragments/head :: head(~{::title},~{::link})">
+    <title th:text="${ticket.subject}">Ticket</title>
+</head>
+<body>
+<header th:replace="fragments/header :: header"/>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 th:text="${ticket.project.name}">Название проекта</h1>
+            <h2 th:text="${ticket.subject}">Тема</h2>
+            <h3 th:text="${ticket.owner.name+' в '+ticket.datetimeAsString()}">Имя и время</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <label th:text="#{label.ticket.status}">Статус</label>
+        </div>
+        <div class="col-md-3">
+            <label th:text="#{label.ticket.priority}">Приоритет</label>
+        </div>
+        <div class="col-md-6">
+            <label th:text="#{label.ticket.assignee}">Исполнитель</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <label th:text="#{${'label.status.'+ticket.status.status.toLowerCase().replace(' ','_')}}">Статус</label>
+        </div>
+        <div class="col-md-3">
+            <label th:text="#{${'label.priority.'+ticket.priority.priority.toLowerCase()}}">Приоритет</label>
+        </div>
+        <div class="col-md-6">
+            <label th:text="${ticket.assignee.name}">Исполнитель</label>
+        </div>
+    </div>
+</div>
+<footer th:replace="fragments/footer :: footer"/>
+</body>
+</html>
