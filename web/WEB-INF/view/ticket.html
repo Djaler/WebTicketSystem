@@ -14,35 +14,44 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-3">
-            <label th:text="#{label.ticket.status}">Статус</label>
+        <div class="col-md-3 form-group">
+            <label th:text="#{label.ticket.status}"></label>
+            <select name="status" class="form-control" th:field="${ticket.status.status}">
+                <option value="Fixed" th:text="#{label.status.fixed}"></option>
+                <option value="In progress" th:text="#{label.status.in_progress}"></option>
+                <option value="Confirmed" th:text="#{label.status.confirmed}"></option>
+                <option value="Invalid" th:text="#{label.status.invalid}"></option>
+                <option value="New" th:text="#{label.status.new}"></option>
+            </select>
         </div>
-        <div class="col-md-3">
-            <label th:text="#{label.ticket.priority}">Приоритет</label>
+        <div class="col-md-3 form-group">
+            <label th:text="#{label.ticket.priority}"></label>
+            <select name="priority" class="form-control" th:field="${ticket.priority.priority}">
+                <option value="Critical" th:text="#{label.priority.critical}"></option>
+                <option value="High" th:text="#{label.priority.high}"></option>
+                <option value="Medium" th:text="#{label.priority.medium}"></option>
+                <option value="Low" th:text="#{label.priority.low}"></option>
+            </select>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6 form-group">
             <label th:text="#{label.ticket.assignee}">Исполнитель</label>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-3">
-            <label th:text="#{${'label.status.'+ticket.status.status.toLowerCase().replace(' ','_')}}">
-                Статус</label>
-        </div>
-        <div class="col-md-3">
-            <label th:text="#{${'label.priority.'+ticket.priority.priority.toLowerCase()}}">Приоритет</label>
-        </div>
-        <div class="col-md-6">
-            <label th:text="${ticket.assignee != null ? ticket.assignee.name : ''}">Исполнитель</label>
+            <input type="text" class="form-control"
+                   th:value="${ticket.assignee != null ? ticket.assignee.name : ''}"/>
         </div>
     </div>
     <div class="row">
         <div class="col-md-12">
-            <p th:text="${ticket.description != null ? ticket.description : ''}"></p>
+            <p th:text="${ticket.description != null ? ticket.description : ''}"
+               class="lead"/>
         </div>
     </div>
     <div class="row" th:each="comment : ${comments}">
-        <p th:text="${comment.text}"></p>
+        <div class="col-md-12">
+            <blockquote class="blockquote">
+                <p class="m-b-0" th:text="${comment.text}"/>
+                <footer class="blockquote-footer" th:text="${comment.user.name}"/>
+            </blockquote>
+        </div>
     </div>
 </div>
 <footer th:replace="fragments/footer :: footer"/>
