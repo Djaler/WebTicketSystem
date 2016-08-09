@@ -28,13 +28,6 @@ public class RegistrationController {
         if (principal != null) {
             return "redirect:/";
         }
-
-        /* ИЛИ можно вот так. Тогда Principal не нужен
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if ((auth instanceof AnonymousAuthenticationToken) == false) {
-            return "redirect:/";
-        }
-        */
         return "registration";
     }
 

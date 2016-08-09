@@ -10,18 +10,18 @@
 <div class="container">
     <div class="row">
         <div class="div-default col-xs-8 col-xs-offset-2 col-sm-6 col-sm-offset-3 col-lg-6 col-lg-offset-3">
-            <form th:action="@{/createticket}" method="post" role="form">
+            <form th:action="@{${'/project/' + selectedProject.id + '/createticket'}}" method="post" role="form">
                 <div class="form-group">
                     <label th:text="#{label.ticket.subject}"></label>
-                    <input name="subject" type="text" class="form-control" autofocus required>
+                    <input th:name="subject" type="text" class="form-control" autofocus required>
                 </div>
                 <div class="form-group">
                     <label th:text="#{label.ticket.description}"></label>
-                    <textarea class="form-control" name="description" required></textarea>
+                    <textarea class="form-control textarea-ticket-desc" th:name="description" required></textarea>
                 </div>
                 <div class="form-group">
                     <label th:text="#{label.ticket.priority}"></label>
-                    <select name="priority" class="form-control">
+                    <select th:name="priority" class="form-control">
                         <option value="Critical" th:text="#{label.priority.critical}"></option>
                         <option value="High" th:text="#{label.priority.high}"></option>
                         <option selected value="Medium" th:text="#{label.priority.medium}"></option>
@@ -37,7 +37,7 @@
                         </button>
                     </div>
                     <div class="col-xs-6 col-sm-4 col-md-5">
-                        <a class="btn btn-default btn-block" th:href="@{/}"
+                        <a class="btn btn-default btn-block" th:href="@{${'/project/' + selectedProject.id}}"
                            th:text="#{button.cancel}"></a>
                     </div>
                 </div>

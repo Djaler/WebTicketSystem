@@ -50,13 +50,14 @@ public class Ticket implements Serializable {
         datetimeAsDate(date);
     }
 
-    private Ticket(User owner, Project project, String subject, PriorityEnum priorityEnum) {
+    public Ticket(User owner, Project project, String subject, PriorityEnum priorityEnum) {
         this();
         setOwner(owner);
         setProject(project);
         setSubject(subject);
         priorityAsEnum(priorityEnum);
         statusAsEnum(StatusEnum.NEW);
+        datetimeAsDate(new Date());
     }
 
     public Ticket() {

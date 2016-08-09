@@ -37,40 +37,16 @@ public class ProjectTicketController {
             return "redirect:/login";
         }
 
-        /* ИЛИ можно вот так. Тогда Principal не нужен
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if ((auth instanceof AnonymousAuthenticationToken) == true) {
-            return "redirect:/login";
-        }
-        */
         List<Project> projects = projectService.getFirst();
         return "redirect:/project/"+projects.get(0).getId();
     }
 
     @RequestMapping(value = "/project/{id}", method = RequestMethod.GET)
     public String tickets(@PathVariable int id, Model model, Principal principal) {
-
-       /* if (principal == null) {
-            return "redirect:/login";
-        }
-*/
-        /* ИЛИ можно вот так. Тогда Principal не нужен
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if ((auth instanceof AnonymousAuthenticationToken) == true) {
-            return "redirect:/login";
-        }
-        */
-
         List<Project> projects = projectService.getAll();
         model.addAttribute("projects",projects);
         List<Ticket> tickets = ticketService.getByProject(projectService.getById(id));
         model.addAttribute("tickets",tickets);
         return "projectTicket";
-    }
-
-
-    @RequestMapping(value = "/createticket", method = RequestMethod.GET)
-    public String createTicket() {
-        return "createTicket";
     }
 }
