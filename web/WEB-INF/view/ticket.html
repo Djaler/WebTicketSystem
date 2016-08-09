@@ -41,6 +41,9 @@
             <p th:text="${ticket.description != null ? ticket.description : ''}"></p>
         </div>
     </div>
+    <div class="row" th:each="comment : ${comments}">
+        <p th:text="${comment.text}"></p>
+    </div>
 </div>
 <footer th:replace="fragments/footer :: footer"/>
 </body>
