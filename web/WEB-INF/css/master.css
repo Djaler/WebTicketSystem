@@ -14,10 +14,25 @@
     width: 25px;
 }
 
-.ru-flag {
-    content: url("../img/ru-flag.png");
+.navbar-inverse .username-text {
+    color: white;
+    font-weight: bold;
 }
 
-.uk-flag {
-    content: url("../img/uk-flag.png");
+.navbar-inverse .navbar-nav .btn-logout {
+    color: white;
+    font-weight: bold;
+}
+
+.navbar-inverse .navbar-nav .btn-logout:hover {
+    background-color: white;
+    color: black;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -khtml-border-radius: 10px;
+}
+
+.navbar-inverse .navbar-brand {
+
 }

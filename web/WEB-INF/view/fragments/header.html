@@ -21,22 +21,26 @@
                         <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                            aria-expanded="false">
                             <th:block th:switch="__${#locale}__">
-                                <img th:case="'ru'" class="img-flag ru-flag">
-                                <img th:case="'en'" class="img-flag uk-flag">
+                                <img th:case="'ru'" th:src="${@environment.getProperty('url.img.ru-flag')}"
+                                     class="img-flag">
+                                <img th:case="'en'" th:src="${@environment.getProperty('url.img.uk-flag')}"
+                                     class="img-flag">
                             </th:block>
                             <span class="caret"></span></a>
                         <ul class="dropdown-menu" style="min-width: 0px">
-                            <li><a th:href="@{${currentUrl}(lang=ru)}"><img class="img-flag ru-flag"></a></li>
-                            <li><a th:href="@{${currentUrl}(lang=en)}"><img class="img-flag uk-flag"></a></li>
+                            <li><a th:href="@{${currentUrl}(lang=ru)}"><img
+                                    th:src="${@environment.getProperty('url.img.ru-flag')}" class="img-flag"></a></li>
+                            <li><a th:href="@{${currentUrl}(lang=en)}"><img
+                                    th:src="${@environment.getProperty('url.img.uk-flag')}" class="img-flag"></a></li>
                         </ul>
                     </li>
                 </ul>
                 <div sec:authorize="isAuthenticated()">
-                    <a class="btn btn-default navbar-btn navbar-right" th:href="@{/logout}" th:text="#{button.logout}">Выйти</a>
-                    <p class="navbar-text navbar-right" style="margin-right: 30px !important;"
-                       sec:authentication="name"></p>
-                    <ul sec:authorize="hasRole('ROLE_Admin')" class="nav navbar-nav navbar-right">
-                        <li><a th:href="@{/admin}" th:text="#{button.adminPanel}"></a></li>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li sec:authorize="hasRole('ROLE_Admin')"><a th:href="@{/admin}"
+                                                                     th:text="#{button.adminPanel}"></a></li>
+                        <li><p class="navbar-text username-text" sec:authentication="name"></p></li>
+                        <li><a class="btn-logout" th:href="@{/logout}" th:text="#{button.logout}">Выйти</a></li>
                     </ul>
                 </div>
             </div>
