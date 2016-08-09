@@ -6,6 +6,8 @@ import com.moracle.webticketsystem.model.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by boggard on 05.08.2016.
  */
@@ -35,7 +37,17 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public Project getByName(String name) {
-        return projectRepository.findByName(name);
+    public Project getById(int id) {
+        return projectRepository.findById(id);
+    }
+
+    @Override
+    public List<Project> getAll() {
+        return projectRepository.findAllByOrderByNameAsc();
+    }
+
+    @Override
+    public List<Project> getFirst() {
+        return projectRepository.findTop1ByOrderByNameAsc();
     }
 }

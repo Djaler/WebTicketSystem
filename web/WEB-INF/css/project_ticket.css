@@ -1,0 +1,5 @@
+.panel .project_list {
+    min-height: 81.5vh;
+    max-height: 81.5vh;
+    overflow-y: scroll;
+}
