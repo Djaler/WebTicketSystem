@@ -28,4 +28,9 @@ public class ProjectTicketController {
         */
         return "projectTicket";
     }
+
+    @RequestMapping(value = "/createticket", method = RequestMethod.GET)
+    public String createTicket() {
+        return "createTicket";
+    }
 }

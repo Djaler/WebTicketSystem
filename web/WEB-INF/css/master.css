@@ -36,3 +36,7 @@
 .navbar-inverse .navbar-brand {
 
 }
+
+textarea {
+    resize: none;
+}
