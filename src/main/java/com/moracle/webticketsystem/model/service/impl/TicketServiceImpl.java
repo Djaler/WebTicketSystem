@@ -4,10 +4,12 @@ import com.moracle.webticketsystem.model.entity.Ticket;
 import com.moracle.webticketsystem.model.repository.TicketRepository;
 import com.moracle.webticketsystem.model.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * Created by djaler on 09.08.16.
  */
+@Service
 public class TicketServiceImpl implements TicketService {
     private final TicketRepository ticketRepository;
 
