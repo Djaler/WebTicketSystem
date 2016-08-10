@@ -9,11 +9,16 @@ import com.moracle.webticketsystem.model.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.net.URLConnection;
 import java.security.Principal;
 import java.util.Date;
 import java.util.List;
@@ -59,5 +64,30 @@ public class TicketController {
         model.addAttribute("comments", commentList);
 
         return "ticket";
+    }
+
+    @RequestMapping(value = "/comment/{id}/downloadattach", method = RequestMethod.GET)
+    public void downloadCommentAttach(@PathVariable String id, HttpServletResponse response) throws IOException {
+
+        byte[] fileBytes = new byte[]{5, 0, 5, 0, 5};
+        sendFileToResponse("comment.test", fileBytes, response);
+    }
+
+    @RequestMapping(value = "/ticket/{id}/downloadattach", method = RequestMethod.GET)
+    public void downloadTicketAttach(@PathVariable String id, HttpServletResponse response) throws IOException {
+
+        byte[] fileBytes = new byte[]{5, 0, 5, 0, 5};
+        sendFileToResponse("ticket.test", fileBytes, response);
+    }
+
+    private void sendFileToResponse(String fileName, byte[] fileBytes, HttpServletResponse response) throws IOException {
+        String mimeType = URLConnection.guessContentTypeFromName(fileName);
+        if (mimeType == null) {
+            mimeType = "application/octet-stream";
+        }
+        response.setContentType(mimeType);
+        response.setHeader("Content-Disposition", String.format("inline; filename=\"" + fileName + "\""));
+        response.setContentLength(fileBytes.length);
+        FileCopyUtils.copy(new ByteArrayInputStream(fileBytes), response.getOutputStream());
     }
 }

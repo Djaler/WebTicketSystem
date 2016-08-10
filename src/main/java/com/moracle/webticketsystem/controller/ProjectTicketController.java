@@ -11,11 +11,10 @@ import com.moracle.webticketsystem.model.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 
@@ -29,7 +28,7 @@ public class ProjectTicketController {
     private final TicketService ticketService;
     private final ProjectService projectService;
     private final UserService userService;
-    private final int ticketsOnPage=15;
+    private final int ticketsOnPage = 15;
 
     @Autowired
     public ProjectTicketController(TicketService ticketService, ProjectService projectService, UserService userService) {
@@ -61,16 +60,22 @@ public class ProjectTicketController {
 
         model.addAttribute("projects", projects);
         model.addAttribute("selectedProject", selectedProject);
-        model.addAttribute("tickets",tickets);
+        model.addAttribute("tickets", tickets);
         model.addAttribute("currentpage", currentpage);
         return "projectTicket";
     }
 
     @RequestMapping(value = "/project/{id}/page{currentpage}/createticket", method = RequestMethod.POST)
     public String doCreateTicket(@PathVariable int id, @PathVariable int currentpage,
-                                 @ModelAttribute TicketInfo ticketInfo, Principal principal) {
+                                 @ModelAttribute TicketInfo ticketInfo,
+                                 @RequestParam(value = "attachedFile", required = false) MultipartFile attachedFiles,
+                                 Principal principal) throws IOException {
         Project project = projectService.getById(id);
         User user = userService.getByLogin(principal.getName());
+        if (attachedFiles.isEmpty() == false) {
+            //TODO: создаём Attachment entity и сетим его в тикет
+        }
+
         Ticket newTicket = new Ticket(user, project, ticketInfo.getSubject(), ticketInfo.getDescription(),
                 PriorityEnum.toEnum(ticketInfo.getPriority()));
         ticketService.addTicket(newTicket);

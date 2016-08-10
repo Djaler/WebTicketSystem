@@ -1,8 +1,10 @@
 package com.moracle.webticketsystem.configuration;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -16,6 +18,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @ComponentScan(basePackages = "com.moracle.webticketsystem")
 @EnableJpaRepositories("com.moracle.webticketsystem.model.repository")
 public class WebTicketSystemConfiguration extends WebMvcConfigurerAdapter {
+
+    @Bean
+    public CommonsMultipartResolver multipartResolver() {
+        CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
+        multipartResolver.setMaxUploadSize(1);
+        return new CommonsMultipartResolver();
+    }
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
