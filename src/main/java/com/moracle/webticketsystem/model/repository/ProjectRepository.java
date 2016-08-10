@@ -11,5 +11,6 @@ import java.util.List;
 public interface ProjectRepository extends JpaRepository<Project,Integer> {
     Project findById(int id);
     List<Project> findAllByOrderByNameAsc();
-    List<Project> findTop1ByOrderByNameAsc();
+
+    Project findTop1ByOrderByNameAsc();
 }

@@ -3,3 +3,7 @@
     max-height: 81.5vh;
     overflow-y: auto;
 }
+
+textarea.textarea-ticket-desc {
+    height: 200px;
+}

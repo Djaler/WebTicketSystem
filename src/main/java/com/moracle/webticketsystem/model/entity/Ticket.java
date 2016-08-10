@@ -40,6 +40,11 @@ public class Ticket implements Serializable {
         setDescription(description);
     }
 
+    public Ticket(User owner, Project project, String subject, String description, PriorityEnum priorityEnum) {
+        this(owner, project, subject, priorityEnum);
+        setDescription(description);
+    }
+
     public Ticket(User owner, Project project, String subject, PriorityEnum priorityEnum, String date) {
         this(owner, project, subject, priorityEnum);
         datetimeAsString(date);

@@ -13,5 +13,6 @@ public interface ProjectService {
     void deleteProject(int id);
     Project getById(int id);
     List<Project> getAll();
-    List<Project> getFirst();
+
+    Project getFirst();
 }

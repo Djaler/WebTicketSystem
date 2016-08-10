@@ -11,16 +11,29 @@
 </head>
 <body>
 <header th:replace="fragments/header :: header"/>
-<footer th:replace="fragments/footer :: footer"/>
+<div th:replace="fragments/createTicketModal :: createTicketModal"/>
+
 <div class="container-fluid">
     <div class="row">
         <div class="panel panel-default col-md-4 col-lg-4 ">
             <div class="panel-heading">Panel heading</div>
-            <div class="project_list list-group" >
-                <a th:with="Url=(${'/project/'+project.id+'/page1'})" th:href="@{${Url}}" class="list-group-item" th:each="project: ${projects}" th:text="${project.name}"/>
+            <div class="project_list list-group">
+                <a th:href="@{${'/project/'+project.id+'/page1'}}" class="list-group-item"
+                   th:each="project: ${projects}" th:text="${project.name}"/>
             </div>
         </div>
         <div class="col-md-8 col-lg-8">
+            <div>
+                <!--TODO: Вынести стили в цсс файл-->
+                <span style="font-size: 26px; font-weight: bold;" th:text="${selectedProject.name}"></span>
+                <!--TODO: Вместо текста можно поместить картинку. А можно и не помещать-->
+                <button style="margin-top: 5px;" type="button" data-toggle="modal" data-target="#createTicketModal"
+                        class="btn btn-default pull-right" th:text="#{button.createTicket}">Create ticket
+                </button>
+            </div>
+            <div>
+                <p th:text="${selectedProject.description}"></p>
+            </div>
             <table class="table">
                 <tr>
                     <th th:text="#{label.ticket.subject}"/>
@@ -38,11 +51,12 @@
                 </tr>
             </table>
             <ul class="pager">
-                <li><a th:href="${'page'+(currentpage-1).toString()}" th:text="#{button.page.prev}"></a></li>
-                <li><a th:href="${'page'+(currentpage+1).toString()}" th:text="#{button.page.next}"></a></li>
+                <li><a th:href="${'page'+(currentpage).toString()}" th:text="#{button.page.prev}"></a></li>
+                <li><a th:href="${'page'+(currentpage+2).toString()}" th:text="#{button.page.next}"></a></li>
             </ul>
         </div>
     </div>
 </div>
+<footer th:replace="fragments/footer :: footer"/>
 </body>
 </html>

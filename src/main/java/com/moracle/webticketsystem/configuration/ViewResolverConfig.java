@@ -57,6 +57,7 @@ public class ViewResolverConfig extends WebMvcConfigurerAdapter implements Appli
         resolver.setApplicationContext(applicationContext);
         resolver.setPrefix("/WEB-INF/view/");
         resolver.setSuffix(".html");
+        resolver.setCharacterEncoding("UTF-8");
         resolver.setTemplateMode(TemplateMode.HTML);
         return resolver;
     }
