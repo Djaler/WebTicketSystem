@@ -17,27 +17,33 @@
     <div class="row">
         <div class="col-md-4 form-group">
             <label th:text="#{label.ticket.status}"></label>
-            <select name="status" class="form-control" th:field="${ticket.status.status}">
+            <select name="status" class="form-control" th:field="${ticket.status.status}"
+                    th:if="${#authorization.expr('hasRole(''ROLE_Programmer'')')}">
                 <option value="Fixed" th:text="#{label.status.fixed}"></option>
                 <option value="In progress" th:text="#{label.status.in_progress}"></option>
                 <option value="Confirmed" th:text="#{label.status.confirmed}"></option>
                 <option value="Invalid" th:text="#{label.status.invalid}"></option>
                 <option value="New" th:text="#{label.status.new}"></option>
             </select>
+            <p class="form-control" th:if="${#authorization.expr('!hasRole(''ROLE_Programmer'')')}"
+               th:text="#{${'label.status.'+ticket.status.status.toLowerCase().replace(' ','_')}}"></p>
         </div>
         <div class="col-md-4 form-group">
             <label th:text="#{label.ticket.priority}"></label>
-            <select name="priority" class="form-control" th:field="${ticket.priority.priority}">
+            <select name="priority" class="form-control" th:field="${ticket.priority.priority}"
+                    th:if="${#authorization.expr('hasRole(''ROLE_Programmer'')')}">
                 <option value="Critical" th:text="#{label.priority.critical}"></option>
                 <option value="High" th:text="#{label.priority.high}"></option>
                 <option value="Medium" th:text="#{label.priority.medium}"></option>
                 <option value="Low" th:text="#{label.priority.low}"></option>
             </select>
+            <p class="form-control" th:if="${#authorization.expr('!hasRole(''ROLE_Programmer'')')}"
+               th:text="#{${'label.priority.'+ticket.priority.priority.toLowerCase()}}"></p>
         </div>
         <div class="col-md-4 form-group">
             <label th:text="#{label.ticket.assignee}">Исполнитель</label>
-            <input type="text" class="form-control"
-                   th:value="${ticket.assignee != null ? ticket.assignee.name : ''}"/>
+            <p class="form-control"
+               th:text="${ticket.assignee != null ? ticket.assignee.name : ''}"></p>
         </div>
     </div>
     <div class="row">
