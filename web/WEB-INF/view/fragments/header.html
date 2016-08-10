@@ -15,7 +15,8 @@
                 <a class="navbar-brand" th:href="@{/}" th:text="#{system.name}">Web Ticket System</a>
             </div>
             <div class="collapse navbar-collapse" id="navbar-collapse-1"
-                 th:with="currentUrl=(${#httpServletRequest.requestURI})">
+                 th:with="currentUrl=(${#httpServletRequest.getRequestURI()+
+                 #httpServletRequest.getQueryString()!=null ? #httpServletRequest.getQueryString() : ''})">
                 <ul class="nav navbar-nav">
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"

@@ -18,7 +18,7 @@ import java.util.Date;
 @Table(name = "ticket")
 public class Ticket implements Serializable {
     private static final long serialVersionUID = 1L;
-    private static final DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+    private static final DateFormat dateFormat = new SimpleDateFormat("HH:mm dd.MM.yyyy");
     private int id;
     private String subject;
     private Timestamp datetime;
