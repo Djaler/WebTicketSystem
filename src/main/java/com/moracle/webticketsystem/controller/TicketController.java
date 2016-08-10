@@ -1,5 +1,6 @@
 package com.moracle.webticketsystem.controller;
 
+import com.moracle.webticketsystem.model.CommentInfo;
 import com.moracle.webticketsystem.model.entity.Comment;
 import com.moracle.webticketsystem.model.entity.Ticket;
 import com.moracle.webticketsystem.model.entity.User;
@@ -10,10 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayInputStream;
@@ -49,21 +47,18 @@ public class TicketController {
         return "ticket";
     }
 
+    @ResponseBody
     @RequestMapping(value = "/ticket/{id}", method = RequestMethod.POST)
-    public String addComment(@PathVariable String id, @RequestParam(value = "comment") String commentText,
-                             Principal principal, Model model) {
+    public CommentInfo addComment(@PathVariable String id, @RequestParam(value = "text") String text,
+                                  Principal principal) {
         Ticket ticket = ticketService.getById(Integer.parseInt(id));
-        model.addAttribute("ticket", ticket);
 
         User currentUser = userService.getByLogin(principal.getName());
 
-        Comment comment = new Comment(ticket, currentUser, new Date(), commentText);
+        Comment comment = new Comment(ticket, currentUser, new Date(), text);
         commentService.addComment(comment);
 
-        List<Comment> commentList = commentService.getByTicket(ticket);
-        model.addAttribute("comments", commentList);
-
-        return "ticket";
+        return new CommentInfo(comment);
     }
 
     @RequestMapping(value = "/comment/{id}/downloadattach", method = RequestMethod.GET)

@@ -52,20 +52,21 @@
                class="lead text-justify"></p>
         </div>
     </div>
-    <div class="row" th:each="comment : ${comments}">
-        <div class="col-md-12">
-            <blockquote class="blockquote">
-                <p class="m-b-0" th:text="${comment.text}"></p>
-                <footer class="blockquote-footer" th:text="${comment.user.name} + ' ' +
-                #{label.comment.at_time} + ' ' + ${comment.datetimeAsString()}"></footer>
-            </blockquote>
+    <div id="comments">
+        <div class="row" th:each="comment : ${comments}">
+            <div class="col-md-12">
+                <blockquote class="blockquote">
+                    <p class="m-b-0" th:text="${comment.text}"></p>
+                    <footer class="blockquote-footer" th:text="${comment.user.name} + ' ' +
+                    #{label.comment.at_time} + ' ' + ${comment.datetimeAsString()}"></footer>
+                </blockquote>
+            </div>
         </div>
     </div>
     <div class="row">
         <div class="col-md-12">
             <div class="form-group">
-                <form method="post" role="form" th:action="${#httpServletRequest.getRequestURI()+
-                 #httpServletRequest.getQueryString()!=null ? #httpServletRequest.getQueryString() : ''}">
+                <form method="post" role="form">
                     <label th:text="#{label.comment.add}"></label>
                     <textarea class="form-control comment" th:name="comment"
                               required></textarea>
@@ -80,5 +81,33 @@
     </div>
 </div>
 <footer th:replace="fragments/footer :: footer"></footer>
+<script type="text/javascript">
+    $('form').on('submit', function (e) {
+        e.preventDefault();
+
+        $.ajax({
+            type: 'POST',
+            data: {text: $('textarea').val()},
+            success: function (comment) {
+                var text = comment['text'];
+                var username = comment['user']['name'];
+                var datetime = comment['datetime'];
+                var at = '[[#{label.comment.at_time}]]';
+                var footer = username + ' ' + at + ' ' + datetime;
+                $('form').trigger('reset');
+
+                $('#comments').append(
+                        '<div class="row">' +
+                        '<div class="col-md-12">' +
+                        '<blockquote class="blockquote">' +
+                        '<p class="m-b-0">' + text + '</p>' +
+                        '<footer class="blockquote-footer">' + footer + '</footer>' +
+                        '</blockquote>' +
+                        '</div>' +
+                        '</div>')
+            }
+        });
+    });
+</script>
 </body>
 </html>
