@@ -34,16 +34,21 @@
                             </div>
                             <div class="form-group">
                                 <label th:text="#{label.attach}"></label>
-                                <label class="btn btn-default btn-file">
-                                    Browse <input type="file" style="display: none;">
-                                </label>
+                                <div>
+                                    <label class="btn btn-default btn-file">
+                                        [[#{button.browse}]] <input id="inputFile" type="file" style="display: none;">
+                                    </label>
+                                    <span id="fileNameSpan"></span>
+                                </div>
+                                <p id="fileSizeError" class="text-danger" hidden th:text="#{label.fileSizeError}"></p>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="submit" form="createTicketForm" class="btn btn-primary" th:text="#{button.ticket.create}">
+                <button id="submitNewTicketBtn" type="submit" form="createTicketForm" class="btn btn-primary"
+                        th:text="#{button.ticket.create}">
                     Submit
                 </button>
                 <button type="button" class="btn btn-default" data-dismiss="modal" th:text="#{button.cancel}">Close
