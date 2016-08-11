@@ -5,7 +5,7 @@
     <link th:href="@{/css/login.css}" rel="stylesheet" type="text/css"/>
 </head>
 <body>
-<header th:replace="fragments/header :: header"/>
+<header th:replace="fragments/header :: header"></header>
 <div class="container">
     <div th:if="${param.error}" class="row">
         <div class="alert alert-danger col-xs-8 col-xs-offset-2 col-sm-6 col-sm-offset-3 col-lg-4 col-lg-offset-4">
@@ -39,6 +39,6 @@
     </div>
 </div>
 
-<footer th:replace="fragments/footer :: footer"/>
+<footer th:replace="fragments/footer :: footer"></footer>
 </body>
 </html>

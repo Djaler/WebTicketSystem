@@ -8,8 +8,8 @@
     <script th:src="@{/js/project_ticket.js}"></script>
 </head>
 <body>
-<header th:replace="fragments/header :: header"/>
-<div th:replace="fragments/createTicketModal :: createTicketModal"/>
+<header th:replace="fragments/header :: header"></header>
+<div th:replace="fragments/createTicketModal :: createTicketModal"></div>
 
 <div class="container-fluid">
     <div class="row">
@@ -17,7 +17,7 @@
             <div class="panel-heading">Panel heading</div>
             <div class="project_list list-group">
                 <a th:href="@{${'/project/'+project.id+'/page1'}}" class="list-group-item"
-                   th:each="project: ${projects}" th:text="${project.name}"/>
+                   th:each="project: ${projects}" th:text="${project.name}"></a>
             </div>
         </div>
         <div class="col-md-8 col-lg-8">
@@ -34,18 +34,18 @@
             </div>
             <table id="ticketTable" class="table">
                 <tr>
-                    <th th:text="#{label.ticket.subject}"/>
-                    <th th:text="#{label.ticket.date}"/>
-                    <th th:text="#{label.ticket.priority}"/>
-                    <th th:text="#{label.ticket.status}"/>
-                    <th th:text="#{label.ticket.assignee}"/>
+                    <th th:text="#{label.ticket.subject}"></th>
+                    <th th:text="#{label.ticket.date}"></th>
+                    <th th:text="#{label.ticket.priority}"></th>
+                    <th th:text="#{label.ticket.status}"></th>
+                    <th th:text="#{label.ticket.assignee}"></th>
                 </tr>
                 <tr th:onclick="'javascript:rowClicked(\'' + ${ticket.id} + '\');'" th:each="ticket: ${tickets}">
-                    <td th:text="${ticket.subject}"/>
-                    <td th:text="${ticket.datetimeAsString()}"/>
-                    <td th:text="#{${'label.priority.'+ticket.priority.priority.toLowerCase()}}"/>
-                    <td th:text="#{${'label.status.'+ticket.status.status.toLowerCase().replace(' ','_')}}"/>
-                    <td th:text="${ticket.assignee != null ? ticket.assignee.name : ''}"/>
+                    <td th:text="${ticket.subject}"></td>
+                    <td th:text="${ticket.datetimeAsString()}"></td>
+                    <td th:text="#{${'label.priority.'+ticket.priority.priority.toLowerCase()}}"></td>
+                    <td th:text="#{${'label.status.'+ticket.status.status.toLowerCase().replace(' ','_')}}"></td>
+                    <td th:text="${ticket.assignee != null ? ticket.assignee.name : ''}"></td>
                 </tr>
             </table>
             <ul class="pager">
@@ -55,6 +55,6 @@
         </div>
     </div>
 </div>
-<footer th:replace="fragments/footer :: footer"/>
+<footer th:replace="fragments/footer :: footer"></footer>
 </body>
 </html>

@@ -28,6 +28,7 @@ public class ProjectTicketController {
     private final TicketService ticketService;
     private final ProjectService projectService;
     private final UserService userService;
+    @SuppressWarnings("FieldCanBeLocal")
     private final int ticketsOnPage = 15;
 
     @Autowired
@@ -72,7 +73,7 @@ public class ProjectTicketController {
                                  Principal principal) throws IOException {
         Project project = projectService.getById(id);
         User user = userService.getByLogin(principal.getName());
-        if (attachedFiles.isEmpty() == false) {
+        if (!attachedFiles.isEmpty()) {
             //TODO: создаём Attachment entity и сетим его в тикет
         }
 

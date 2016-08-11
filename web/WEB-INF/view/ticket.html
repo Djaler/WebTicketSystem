@@ -90,7 +90,7 @@
             data: {text: $('textarea').val()},
             success: function (comment) {
                 var text = comment['text'];
-                var username = comment['user']['name'];
+                var username = comment['username'];
                 var datetime = comment['datetime'];
                 var at = '[[#{label.comment.at_time}]]';
                 var footer = username + ' ' + at + ' ' + datetime;

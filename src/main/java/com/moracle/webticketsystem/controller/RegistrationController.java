@@ -20,8 +20,12 @@ import java.security.Principal;
 @Controller
 public class RegistrationController {
 
+    private final UserService userService;
+
     @Autowired
-    private UserService userService;
+    public RegistrationController(UserService userService) {
+        this.userService = userService;
+    }
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registration(Principal principal) {

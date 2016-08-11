@@ -13,8 +13,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProjectAccessServiceImpl implements ProjectAccessService{
 
+    private final ProjectAccessRepository projectAccessRepository;
+
     @Autowired
-    ProjectAccessRepository projectAccessRepository;
+    public ProjectAccessServiceImpl(ProjectAccessRepository projectAccessRepository) {
+        this.projectAccessRepository = projectAccessRepository;
+    }
 
     @Override
     public ProjectAccess addLink(int id_project, int id_user) {

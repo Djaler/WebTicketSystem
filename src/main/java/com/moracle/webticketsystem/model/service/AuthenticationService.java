@@ -9,7 +9,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * Created by dmitry on 8/7/2016.
@@ -31,8 +31,7 @@ public class AuthenticationService implements UserDetailsService {
             return null;
         }
         GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + user.getRole().getRole());
-        UserDetails userDetails = new org.springframework.security.core.userdetails.User(user.getLogin(),
-                user.passwordAsString(), Arrays.asList(authority));
-        return userDetails;
+        return new org.springframework.security.core.userdetails.User(user.getLogin(),
+                user.passwordAsString(), Collections.singletonList(authority));
     }
 }

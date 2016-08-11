@@ -1,7 +1,6 @@
 package com.moracle.webticketsystem.model;
 
 import com.moracle.webticketsystem.model.entity.Comment;
-import com.moracle.webticketsystem.model.entity.User;
 
 /**
  * Created by djaler on 10.08.16.
@@ -9,10 +8,10 @@ import com.moracle.webticketsystem.model.entity.User;
 public class CommentInfo {
     private String datetime;
     private String text;
-    private User user;
+    private String username;
 
     public CommentInfo(Comment comment) {
-        setUser(comment.getUser());
+        setUsername(comment.getUser().getName());
         setText(comment.getText());
         setDatetime(comment.datetimeAsString());
     }
@@ -33,11 +32,11 @@ public class CommentInfo {
         this.text = text;
     }
 
-    public User getUser() {
-        return user;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

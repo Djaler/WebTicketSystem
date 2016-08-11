@@ -81,7 +81,7 @@ public class TicketController {
             mimeType = "application/octet-stream";
         }
         response.setContentType(mimeType);
-        response.setHeader("Content-Disposition", String.format("inline; filename=\"" + fileName + "\""));
+        response.setHeader("Content-Disposition", "inline; filename=\"" + fileName + "\"");
         response.setContentLength(fileBytes.length);
         FileCopyUtils.copy(new ByteArrayInputStream(fileBytes), response.getOutputStream());
     }

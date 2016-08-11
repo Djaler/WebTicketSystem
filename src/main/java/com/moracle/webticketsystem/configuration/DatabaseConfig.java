@@ -25,10 +25,18 @@ import java.util.Properties;
 @EnableTransactionManagement
 @PropertySource("classpath:app.properties")
 public class DatabaseConfig {
+    private final Environment env;
+
+    @Inject
+    public DatabaseConfig(Environment env) {
+        this.env = env;
+    }
+
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
+        //noinspection RedundantArrayCreation
         em.setPackagesToScan(new String[]{"com.moracle.webticketsystem.model.entity"});
 
         JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
@@ -36,9 +44,6 @@ public class DatabaseConfig {
         em.setJpaProperties(additionalProperties());
         return em;
     }
-
-    @Inject
-    Environment env;
 
     @Bean
     public DataSource dataSource() {
@@ -64,8 +69,7 @@ public class DatabaseConfig {
     }
 
     Properties additionalProperties() {
-        Properties properties = new Properties();
 
-        return properties;
+        return new Properties();
     }
 }

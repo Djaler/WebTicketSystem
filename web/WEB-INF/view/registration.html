@@ -5,7 +5,7 @@
     <link th:href="@{/css/login.css}" rel="stylesheet" type="text/css"/>
 </head>
 <body>
-<header th:replace="fragments/header :: header"/>
+<header th:replace="fragments/header :: header"></header>
 <div class="container">
     <th:block th:if="${userExistsError == true}">
         <div class="row">
@@ -44,6 +44,6 @@
         </div>
     </div>
 </div>
-<footer th:replace="fragments/footer :: footer"/>
+<footer th:replace="fragments/footer :: footer"></footer>
 </body>
 </html>
