@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -46,28 +47,27 @@ public class ProjectTicketController {
         }
 
         Project project = projectService.getFirst();
-        return "redirect:/project/" + project.getId() + "/page1";
+        return "redirect:/project/" + project.getId();
     }
 
-    @RequestMapping(value = "/project/{id}/page{currentpage}", method = RequestMethod.GET)
-    public String tickets(@PathVariable int id, @PathVariable int currentpage, Model model) {
-        currentpage--;
+    @RequestMapping(value = "/project/{id}", method = RequestMethod.GET)
+    public String tickets(@PathVariable int id, Model model) {
         List<Project> projects = projectService.getAll();
         Project selectedProject = projects
                 .stream()
                 .filter(project -> project.getId() == id)
                 .findFirst().get();
-        List<Ticket> tickets = ticketService.getByProject(projectService.getById(id), currentpage, ticketsOnPage);
+        List<Ticket> tickets = ticketService.getByProject(projectService.getById(id), 0, ticketsOnPage);
 
         model.addAttribute("projects", projects);
         model.addAttribute("selectedProject", selectedProject);
         model.addAttribute("tickets", tickets);
-        model.addAttribute("currentpage", currentpage);
+        model.addAttribute("currentpage",0);
         return "projectTicket";
     }
 
-    @RequestMapping(value = "/project/{id}/page{currentpage}/createticket", method = RequestMethod.POST)
-    public String doCreateTicket(@PathVariable int id, @PathVariable int currentpage,
+    @RequestMapping(value = "/project/{id}/createticket", method = RequestMethod.POST)
+    public String doCreateTicket(@PathVariable int id,
                                  @ModelAttribute TicketInfo ticketInfo,
                                  @RequestParam(value = "attachedFile", required = false) MultipartFile attachedFiles,
                                  Principal principal) throws IOException {
@@ -80,6 +80,17 @@ public class ProjectTicketController {
         Ticket newTicket = new Ticket(user, project, ticketInfo.getSubject(), ticketInfo.getDescription(),
                 PriorityEnum.toEnum(ticketInfo.getPriority()));
         ticketService.addTicket(newTicket);
-        return "redirect: /project/" + id + "/page" + currentpage;
+        return "redirect: /project/" + id;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "project/{id}", method = RequestMethod.POST)
+    public List<TicketInfo> pages(@PathVariable int id, @RequestParam(value = "page") int page) {
+        List<Ticket> tickets = ticketService.getByProject(projectService.getById(id), page, ticketsOnPage);
+        List<TicketInfo> ticketInfos = new ArrayList<>();
+        for (Ticket t:tickets) {
+            ticketInfos.add(new TicketInfo(t));
+        }
+        return ticketInfos;
     }
 }

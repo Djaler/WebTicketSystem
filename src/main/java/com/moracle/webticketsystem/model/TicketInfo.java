@@ -1,13 +1,32 @@
 package com.moracle.webticketsystem.model;
 
+import com.moracle.webticketsystem.model.entity.Ticket;
+
 /**
  * Created by dmitry on 8/9/2016.
  */
 public class TicketInfo {
+    private int id;
     private String subject;
     private String description;
     private String status;
     private String priority;
+    private String dateAsString;
+    private String assigneeName;
+
+    public TicketInfo(Ticket ticket) {
+        this.id = ticket.getId();
+        this.subject = ticket.getSubject();
+        this.status = ticket.getStatus().getStatus();
+        this.priority = ticket.getPriority().getPriority();
+        this.dateAsString = ticket.datetimeAsString();
+        if(ticket.getAssignee()!=null) {
+            this.assigneeName = ticket.getAssignee().getName();
+        }
+        else {
+            this.assigneeName = "";
+        }
+    }
 
     public String getSubject() {
         return subject;
@@ -29,6 +48,23 @@ public class TicketInfo {
         return status;
     }
 
+    public String getDateAsString() {
+
+        return dateAsString;
+    }
+
+    public void setDateAsString(String dateAsString) {
+        this.dateAsString = dateAsString;
+    }
+
+    public void setAssigneeName(String assigneeName) {
+        this.assigneeName = assigneeName;
+    }
+
+    public String getAssigneeName() {
+        return assigneeName;
+    }
+
     public void setStatus(String status) {
         this.status = status;
     }
@@ -39,5 +75,13 @@ public class TicketInfo {
 
     public void setPriority(String priority) {
         this.priority = priority;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
