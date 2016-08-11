@@ -13,6 +13,12 @@ public class ProjectAccessKey implements Serializable {
 
     }
 
+    public ProjectAccessKey(int id_project, int id_user) {
+        this();
+        setIdProject(id_project);
+        setIdUser(id_user);
+    }
+
     public int getIdProject() {
         return id_project;
     }
