@@ -38,8 +38,14 @@
                 </ul>
                 <div sec:authorize="isAuthenticated()">
                     <ul class="nav navbar-nav navbar-right">
-                        <li sec:authorize="hasRole('ROLE_Admin')"><a th:href="@{/admin}"
-                                                                     th:text="#{button.adminPanel}"></a></li>
+                        <li sec:authorize="hasRole('ROLE_Admin')" class="dropdown">
+                            <a class="dropdown-toggle" role="button" data-toggle="dropdown"
+                               th:text="#{button.adminPanel}"></a>
+                            <ul class="dropdown-menu dropdown-menu-left">
+                                <li><a th:href="@{/admin/projects}" th:text="#{label.admin.projects}"></a></li>
+                                <li><a th:href="@{/admin/roles}" th:text="#{label.admin.roles}"></a></li>
+                            </ul>
+                        </li>
                         <li><p class="navbar-text username-text" sec:authentication="name"></p></li>
                         <li><a class="btn-logout" th:href="@{/logout}" th:text="#{button.logout}">Выйти</a></li>
                     </ul>
