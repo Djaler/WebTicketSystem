@@ -13,4 +13,5 @@ import java.util.List;
 public interface TicketRepository extends JpaRepository<Ticket, Integer> {
     Ticket findById(int id);
     List<Ticket> findByProject(Project project, Pageable pageable);
+    int countByProject(Project project);
 }

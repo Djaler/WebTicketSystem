@@ -1,11 +1,20 @@
 /*.fix {
     position: fixed;
 }*/
-.panel .project_list {
+.project_panel {
+    position: fixed;
+}
+.project_list {
+    margin-top: 10vh;
     min-height: 81.5vh;
     max-height: 81.5vh;
     overflow-y: auto;
 }
+/*.table-fixed {
+    min-height: 81.5vh;
+    max-height: 81.5vh;
+    overflow-y: scroll;
+}*/
 
 textarea.textarea-ticket-desc {
     height: 200px;

@@ -70,6 +70,7 @@ public class ProjectTicketController {
         model.addAttribute("selectedProject", selectedProject);
         model.addAttribute("tickets", tickets);
         model.addAttribute("currentpage", 0);
+        model.addAttribute("pagecount", ticketService.countByProject(selectedProject)/ticketsOnPage);
         return "projectTicket";
     }
 

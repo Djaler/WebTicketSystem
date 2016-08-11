@@ -42,4 +42,9 @@ public class TicketServiceImpl implements TicketService {
     public List<Ticket> getByProject(Project project, int page, int size) {
         return ticketRepository.findByProject(project, new PageRequest(page, size, Sort.Direction.DESC, "datetime"));
     }
+
+    @Override
+    public int countByProject(Project project) {
+        return ticketRepository.countByProject(project);
+    }
 }

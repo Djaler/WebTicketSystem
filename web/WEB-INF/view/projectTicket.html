@@ -14,10 +14,28 @@
                     page: n_page
                 }),
                 success: function (data) {
+                    var pagecount='[[${pagecount}]]';
                     $('.rowTicket').remove();
+                    if(n_page<pagecount) {
+                        $('#nextItem').html(
+                                '<button class="btn btn-default" onclick="changePage(' + (n_page + 1) + ')" id="nextBtn">[[#{button.page.next}]]</button>'
+                        )
+                    }
+                    else {
+                        $('#nextBtn').addClass("disabled");
+                        $('#nextBtn').prop( "disabled", true );
+                    }
+                    if(n_page>0) {
+                        $('#prevItem').html(
+                                '<button class="btn btn-default" onclick="changePage(' + (n_page - 1) + ')" id="prevBtn">[[#{button.page.prev}]]</button>'
+                        )
+                    }
+                    else {
+                        $('#prevBtn').addClass("disabled");
+                        $('#prevBtn').prop( "disabled", true );
+                    }
                     data.forEach(function(item, i, arr) {
                         //alert(item['subject']);
-
                         $('#ticketsTable').append(
                                 '<tr class="rowTicket" onclick="rowClicked('+item['id']+')">'+
                                     '<td>'+item['subject']+'</td>'+
@@ -42,14 +60,13 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="panel panel-default col-md-4 col-lg-4 ">
-            <div class="panel-heading">Panel heading</div>
+        <div class="col-md-2 col-lg-2">
             <div class="project_list list-group">
                 <a th:href="@{${'/project/'+project.id}}" class="list-group-item"
                    th:each="project: ${projects}" th:text="${project.name}"/>
             </div>
         </div>
-        <div class="col-md-8 col-lg-8">
+        <div class="col-md-10 col-lg-10">
             <div>
                 <!--TODO: Вынести стили в цсс файл-->
                 <span style="font-size: 26px; font-weight: bold;" th:text="${selectedProject.name}"></span>
@@ -64,7 +81,7 @@
             <div>
                 <p th:text="${selectedProject.description}"></p>
             </div>
-                <table id="ticketsTable" class="table table_fixed">
+                <table id="ticketsTable" class="table-fixed table">
                         <tr>
                             <th th:text="#{label.ticket.subject}"/>
                             <th th:text="#{label.ticket.date}"/>
@@ -81,8 +98,8 @@
                         </tr>
                 </table>
             <ul class="pager">
-                <li><a th:onclick="${'changePage('+(currentpage-1)+')'}" id="prevLink" th:text="#{button.page.prev}"></a></li>
-                <li><a th:onclick="${'changePage('+(currentpage+1)+')'}" id="nextLink" th:text="#{button.page.next}"></a></li>
+                <li id="prevItem"><button class="btn btn-default" th:onclick="${'changePage('+(currentpage1)+')'}" id="prevBtn" th:text="#{button.page.prev}"></button></li>
+                <li id="nextItem"><button class="btn btn-default" th:onclick="${'changePage('+(currentpage+1)+')'}" id="nextBtn" th:text="#{button.page.next}"></button></li>
                 <!--h:href="${'page'+(currentpage+2).toString()}"-->
             </ul>
         </div>
