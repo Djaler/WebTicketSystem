@@ -22,17 +22,12 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public Comment addComment(Comment comment) {
+    public Comment save(Comment comment) {
         return commentRepository.save(comment);
     }
 
     @Override
-    public Comment updateTicket(Comment comment) {
-        return commentRepository.save(comment);
-    }
-
-    @Override
-    public void deleteId(int id) {
+    public void delete(int id) {
         commentRepository.delete(id);
     }
 

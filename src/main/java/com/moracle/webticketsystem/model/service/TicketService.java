@@ -9,11 +9,9 @@ import java.util.List;
  * Created by djaler on 09.08.16.
  */
 public interface TicketService {
-    Ticket addTicket(Ticket ticket);
+    Ticket save(Ticket ticket);
 
-    Ticket updateTicket(Ticket ticket);
-
-    void deleteTicket(int id);
+    void delete(int id);
 
     Ticket getById(int id);
 

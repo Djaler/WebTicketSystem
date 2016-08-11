@@ -6,9 +6,7 @@ import com.moracle.webticketsystem.model.entity.Status;
  * Created by djaler on 05.08.16.
  */
 public interface StatusService {
-    Status addStatus(Status status);
+    Status save(Status status);
 
-    Status updateStatus(Status status);
-
-    void deleteStatus(int id);
+    void delete(int id);
 }

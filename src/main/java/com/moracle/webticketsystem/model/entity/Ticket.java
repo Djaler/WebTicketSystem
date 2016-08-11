@@ -28,6 +28,7 @@ public class Ticket implements Serializable {
     private Priority priority;
     private User owner;
     private User assignee;
+    private Attachment attachment;
 
     public Ticket(User owner, Project project, String subject, String description, PriorityEnum priorityEnum, String date) {
         this(owner, project, subject, priorityEnum);
@@ -195,6 +196,16 @@ public class Ticket implements Serializable {
 
     public void setPriority(Priority priority) {
         this.priority = priority;
+    }
+
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+    @JoinColumn(name = "id_attachment")
+    public Attachment getAttachment() {
+        return attachment;
+    }
+
+    public void setAttachment(Attachment attachment) {
+        this.attachment = attachment;
     }
 
     @Override

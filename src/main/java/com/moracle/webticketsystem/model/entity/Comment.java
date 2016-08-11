@@ -1,6 +1,5 @@
 package com.moracle.webticketsystem.model.entity;
 
-import com.sun.xml.internal.ws.api.message.Attachment;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -117,6 +116,16 @@ public class Comment implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+    @JoinColumn(name = "id_attachment")
+    public Attachment getAttachment() {
+        return attachment;
+    }
+
+    public void setAttachment(Attachment attachment) {
+        this.attachment = attachment;
     }
 
     @Override

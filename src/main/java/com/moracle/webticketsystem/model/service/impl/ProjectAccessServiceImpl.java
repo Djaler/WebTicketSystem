@@ -22,8 +22,7 @@ public class ProjectAccessServiceImpl implements ProjectAccessService{
 
     @Override
     public ProjectAccess addLink(int id_project, int id_user) {
-        //return projectAccessRepository.save(new ProjectAccess(id_project,id_user));
-        return null;
+        return projectAccessRepository.save(new ProjectAccess(id_project, id_user));
     }
 
     @Override

@@ -24,17 +24,12 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
-    public Ticket addTicket(Ticket ticket) {
+    public Ticket save(Ticket ticket) {
         return ticketRepository.save(ticket);
     }
 
     @Override
-    public Ticket updateTicket(Ticket ticket) {
-        return ticketRepository.save(ticket);
-    }
-
-    @Override
-    public void deleteTicket(int id) {
+    public void delete(int id) {
         ticketRepository.delete(id);
     }
 

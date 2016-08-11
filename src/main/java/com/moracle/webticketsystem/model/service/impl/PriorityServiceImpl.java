@@ -25,17 +25,12 @@ public class PriorityServiceImpl implements PriorityService {
     }
 
     @Override
-    public Priority addPriority(Priority priority) {
+    public Priority save(Priority priority) {
         return priorityRepository.save(priority);
     }
 
     @Override
-    public Priority updatePriority(Priority priority) {
-        return priorityRepository.save(priority);
-    }
-
-    @Override
-    public void deletePriority(int id) {
+    public void delete(int id) {
         priorityRepository.delete(id);
     }
 

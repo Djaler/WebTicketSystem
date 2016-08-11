@@ -1,6 +1,7 @@
 package com.moracle.webticketsystem.controller;
 
 import com.moracle.webticketsystem.model.CommentInfo;
+import com.moracle.webticketsystem.model.entity.Attachment;
 import com.moracle.webticketsystem.model.entity.Comment;
 import com.moracle.webticketsystem.model.entity.Ticket;
 import com.moracle.webticketsystem.model.entity.User;
@@ -15,8 +16,11 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.security.Principal;
 import java.util.Date;
 import java.util.List;
@@ -56,33 +60,38 @@ public class TicketController {
         User currentUser = userService.getByLogin(principal.getName());
 
         Comment comment = new Comment(ticket, currentUser, new Date(), text);
-        commentService.addComment(comment);
+        commentService.save(comment);
 
         return new CommentInfo(comment);
     }
 
     @RequestMapping(value = "/comment/{id}/downloadattach", method = RequestMethod.GET)
     public void downloadCommentAttach(@PathVariable String id, HttpServletResponse response) throws IOException {
-
-        byte[] fileBytes = new byte[]{5, 0, 5, 0, 5};
-        sendFileToResponse("comment.test", fileBytes, response);
+        Comment comment = commentService.getById(Integer.parseInt(id));
+        sendFileToResponse(comment.getAttachment(), response);
     }
 
     @RequestMapping(value = "/ticket/{id}/downloadattach", method = RequestMethod.GET)
     public void downloadTicketAttach(@PathVariable String id, HttpServletResponse response) throws IOException {
-
-        byte[] fileBytes = new byte[]{5, 0, 5, 0, 5};
-        sendFileToResponse("ticket.test", fileBytes, response);
+        Ticket ticket = ticketService.getById(Integer.parseInt(id));
+        sendFileToResponse(ticket.getAttachment(), response);
     }
 
-    private void sendFileToResponse(String fileName, byte[] fileBytes, HttpServletResponse response) throws IOException {
-        String mimeType = URLConnection.guessContentTypeFromName(fileName);
+    private void sendFileToResponse(Attachment attachment, HttpServletResponse response) throws IOException {
+        File file = new File(attachment.getPath());
+        byte[] bFile = new byte[(int) file.length()];
+        try (FileInputStream fileInputStream = new FileInputStream(file)) {
+            fileInputStream.read(bFile);
+        }
+        String mimeType = URLConnection.guessContentTypeFromName(file.getName());
         if (mimeType == null) {
             mimeType = "application/octet-stream";
         }
+        response.setCharacterEncoding("UTF-8");
         response.setContentType(mimeType);
+        String fileName = URLEncoder.encode(file.getName(), "UTF-8");
         response.setHeader("Content-Disposition", "inline; filename=\"" + fileName + "\"");
-        response.setContentLength(fileBytes.length);
-        FileCopyUtils.copy(new ByteArrayInputStream(fileBytes), response.getOutputStream());
+        response.setContentLength((int) file.length());
+        FileCopyUtils.copy(new ByteArrayInputStream(bFile), response.getOutputStream());
     }
 }

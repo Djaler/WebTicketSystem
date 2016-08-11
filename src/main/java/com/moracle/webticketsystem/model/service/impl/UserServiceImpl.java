@@ -42,11 +42,6 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User update(User user) {
-        return userRepository.saveAndFlush(user);
-    }
-
-    @Override
     public User getByLogin(String login) {
         return userRepository.findByLogin(login);
     }

@@ -22,17 +22,12 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public Project addProject(Project project) {
+    public Project save(Project project) {
         return projectRepository.save(project);
     }
 
     @Override
-    public Project updateProject(Project project) {
-        return projectRepository.save(project);
-    }
-
-    @Override
-    public void deleteProject(int id) {
+    public void delete(int id) {
         projectRepository.delete(id);
     }
 

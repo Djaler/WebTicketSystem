@@ -9,11 +9,9 @@ import java.util.List;
  * Created by djaler on 09.08.16.
  */
 public interface CommentService {
-    Comment addComment(Comment comment);
+    Comment save(Comment comment);
 
-    Comment updateTicket(Comment comment);
-
-    void deleteId(int id);
+    void delete(int id);
 
     Comment getById(int id);
 

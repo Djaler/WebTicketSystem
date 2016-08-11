@@ -25,17 +25,12 @@ public class StatusServiceImpl implements StatusService {
     }
 
     @Override
-    public Status addStatus(Status status) {
+    public Status save(Status status) {
         return statusRepository.save(status);
     }
 
     @Override
-    public Status updateStatus(Status status) {
-        return statusRepository.save(status);
-    }
-
-    @Override
-    public void deleteStatus(int id) {
+    public void delete(int id) {
         statusRepository.delete(id);
     }
 

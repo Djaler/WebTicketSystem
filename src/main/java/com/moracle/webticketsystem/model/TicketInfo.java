@@ -28,6 +28,10 @@ public class TicketInfo {
         }
     }
 
+    public TicketInfo() {
+
+    }
+
     public String getSubject() {
         return subject;
     }
@@ -48,6 +52,10 @@ public class TicketInfo {
         return status;
     }
 
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public String getDateAsString() {
 
         return dateAsString;
@@ -57,16 +65,12 @@ public class TicketInfo {
         this.dateAsString = dateAsString;
     }
 
-    public void setAssigneeName(String assigneeName) {
-        this.assigneeName = assigneeName;
-    }
-
     public String getAssigneeName() {
         return assigneeName;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setAssigneeName(String assigneeName) {
+        this.assigneeName = assigneeName;
     }
 
     public String getPriority() {
