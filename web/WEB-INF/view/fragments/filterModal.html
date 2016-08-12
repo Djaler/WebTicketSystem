@@ -3,7 +3,7 @@
 
 <div th:fragment="filterModal" id="filterModal" class="modal fade" tabindex="-1" role="dialog"
      aria-labelledby="mySmallModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm">
+    <div class="modal-dialog modal-md">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" th:text="#{filterModal.title}"></h4>
@@ -12,7 +12,7 @@
                 <form id="filterForm" role="form">
                     <div class="form-group">
                         <label th:text="#{label.ticket.status}"></label>
-                        <select name="status" class="form-control">
+                        <select id="statusFilter" class="form-control">
                             <option id="statusEmpty" selected value="empty"></option>
                             <option value="Fixed" th:text="#{label.status.fixed}"></option>
                             <option value="In progress" th:text="#{label.status.in_progress}"></option>
@@ -23,22 +23,13 @@
                     </div>
                     <div class="form-group">
                         <label th:text="#{label.ticket.priority}"></label>
-                        <select name="priority" class="form-control">
+                        <select id="priorityFilter" class="form-control">
                             <option id="priorityEmpty" selected value="empty"></option>
                             <option value="Critical" th:text="#{label.priority.critical}"></option>
                             <option value="High" th:text="#{label.priority.high}"></option>
                             <option value="Medium" th:text="#{label.priority.medium}"></option>
                             <option value="Low" th:text="#{label.priority.low}"></option>
                         </select>
-                    </div>
-                    <div class="form-group">
-                        <label th:text="#{label.ticket.date}"></label>
-                        <div class='input-group date' id='filterDateTimePicker'>
-                            <input id="datetimeInput" type='text' class="form-control"/>
-                            <span class="input-group-addon">
-                                        <span class="glyphicon glyphicon-calendar"></span>
-                                    </span>
-                        </div>
                     </div>
                 </form>
             </div>
@@ -47,7 +38,7 @@
                         th:text="#{button.filter.reset}">
                     Submit
                 </button>
-                <button id="submitFilterBtn" type="submit" class="btn btn-primary"
+                <button id="submitFilterBtn" data-dismiss="modal" type="submit" class="btn btn-primary"
                         th:text="#{button.filter.apply}">
                     Submit
                 </button>

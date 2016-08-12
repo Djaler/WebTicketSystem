@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
 <head th:replace="fragments/head :: head(~{::title},~{::link}, ~{::script})">
-    <title th:text="#{ticketsPage.title}">Tickets</title>
+    <title th:text="#{ticketsPage.title}">Tickets</title>=
     <link th:href="@{/css/project_ticket.css}" rel="stylesheet" type="text/css"/>
+
+
     <script th:src="@{/js/common_func.js}"></script>
     <script th:src="@{/js/project_ticket.js}"></script>
     <script type="text/javascript">
@@ -89,13 +91,7 @@
                             <th th:text="#{label.ticket.status}"/>
                             <th th:text="#{label.ticket.assignee}"/>
                         </tr>
-                        <tr class="rowTicket" th:onclick="'javascript:rowClicked(\'' + ${ticket.id} + '\');'" th:each="ticket: ${tickets}">
-                            <td th:text="${ticket.subject}"/>
-                            <td th:text="${ticket.datetimeAsString()}"/>
-                            <td th:text="#{${'label.priority.'+ticket.priority.priority.toLowerCase()}}"/>
-                            <td th:text="#{${'label.status.'+ticket.status.status.toLowerCase().replace(' ','_')}}"/>
-                            <td th:text="${ticket.assignee != null ? ticket.assignee.name : ''}"/>
-                        </tr>
+                    <tr th:replace="fragments/ticketTableRow :: ticketTableRow"></tr>
                 </table>
             <ul class="pager">
                 <li id="prevItem"><button disabled="disabled" class="btn btn-default" th:onclick="${'changePage('+(currentpage1)+')'}" id="prevBtn" th:text="#{button.page.prev}"></button></li>
