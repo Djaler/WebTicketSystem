@@ -124,6 +124,6 @@ public class ProjectTicketController {
 
         List<Ticket> tickets = ticketService.getByProjectWithFilter(projectService.getById(id), status, priority);
         model.addAttribute("tickets", tickets);
-        return "fragments/filterResponse";
+        return "fragments/ticketTableRow";
     }
 }
