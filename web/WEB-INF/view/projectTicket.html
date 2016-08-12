@@ -62,13 +62,13 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-2 col-lg-2">
-            <div class="project_list list-group">
+        <div class="col-xs-12 col-md-2 col-lg-2">
+            <div class="affix list-group">
                 <a th:href="@{${'/project/'+project.id}}" class="list-group-item"
                    th:each="project: ${projects}" th:text="${project.name}"/>
             </div>
         </div>
-        <div class="tickets-area col-md-10 col-lg-10">
+        <div class="tickets-area col-md-9 col-lg-9">
             <div>
                 <!--TODO: Вынести стили в цсс файл-->
                 <h3 style="font-size: 26px; font-weight: bold;" th:text="${selectedProject.name}"></h3>
