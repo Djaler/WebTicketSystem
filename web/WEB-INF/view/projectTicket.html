@@ -98,9 +98,8 @@
                         </tr>
                 </table>
             <ul class="pager">
-                <li id="prevItem"><button class="btn btn-default" th:onclick="${'changePage('+(currentpage1)+')'}" id="prevBtn" th:text="#{button.page.prev}"></button></li>
-                <li id="nextItem"><button class="btn btn-default" th:onclick="${'changePage('+(currentpage+1)+')'}" id="nextBtn" th:text="#{button.page.next}"></button></li>
-                <!--h:href="${'page'+(currentpage+2).toString()}"-->
+                <li id="prevItem"><button disabled="disabled" class="btn btn-default" th:onclick="${'changePage('+(currentpage1)+')'}" id="prevBtn" th:text="#{button.page.prev}"></button></li>
+                <li id="nextItem"><button th:disabled="${currentpage==pagecount}" class="btn btn-default" th:onclick="${'changePage('+(currentpage+1)+')'}" id="nextBtn" th:text="#{button.page.next}"></button></li>
             </ul>
         </div>
     </div>
