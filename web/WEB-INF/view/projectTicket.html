@@ -69,7 +69,7 @@
         <div class="col-md-10 col-lg-10">
             <div>
                 <!--TODO: Вынести стили в цсс файл-->
-                <h3 style="margin-top: 10vh; font-size: 26px; font-weight: bold;" th:text="${selectedProject.name}"></h3>
+                <h3 style="font-size: 26px; font-weight: bold;" th:text="${selectedProject.name}"></h3>
                 <!--TODO: Вместо текста можно поместить картинку. А можно и не помещать-->
                 <button style="margin-top: 5px;" type="button" data-toggle="modal" data-target="#createTicketModal"
                         class="btn btn-default pull-right" th:text="#{button.createTicket}">Create ticket
