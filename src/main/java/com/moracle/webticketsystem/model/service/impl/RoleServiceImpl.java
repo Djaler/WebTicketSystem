@@ -45,4 +45,9 @@ public class RoleServiceImpl implements RoleService {
 
         RoleEnum.setIdMap(idMap);
     }
+
+    @Override
+    public Role getByRole(String role) {
+        return roleRepository.findByRole(role);
+    }
 }

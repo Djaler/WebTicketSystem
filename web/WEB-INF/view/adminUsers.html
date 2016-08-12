@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head th:replace="fragments/head :: head(~{::title},~{::link}, ~{::script})">
+    <title>Панель</title>
+
+</head>
+<body>
+    <header th:replace="fragments/header :: header"></header>
+    <div class="container-fluid" style="margin-top: 10vh;">
+        <div class="row">
+            <div class="col-md-4 col-lg-4">
+                <h4 th:text="#{label.login}">Логин</h4>
+            </div>
+            <div class="col-md-4 col-lg-4">
+                <h4 th:text="#{label.username}">ФИО</h4>
+            </div>
+            <div class="col-md-4 col-lg-4">
+                <h4 th:text="#{label.role}">Роль</h4>
+            </div>
+        </div>
+        <div class="row" th:each="user:${users}">
+            <div class="col-md-4 col-lg-4">
+                <span class="form-control" th:text="${user.login}"></span>
+            </div>
+            <div class="col-md-4 col-lg-4">
+                <span class="form-control" th:text="${user.name}"></span>
+            </div>
+            <div class="col-md-4 col-lg-4">
+                <select th:name="${user.login}" class="form-control">
+                    <option value="Admin" th:selected="${user.role.role=='Admin'}" th:text="#{label.role.admin}"></option>
+                    <option value="User" th:selected="${user.role.role=='User'}" th:text="#{label.role.user}"></option>
+                    <option value="Programmer" th:selected="${user.role.role=='Programmer'}" th:text="#{label.role.programmer}"></option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <script th:src="@{/js/admin_users.js}"></script>
+</body>
+</html>
