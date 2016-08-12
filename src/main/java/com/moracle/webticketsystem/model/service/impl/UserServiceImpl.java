@@ -52,4 +52,14 @@ public class UserServiceImpl implements UserService{
     public List<User> getUsersNotInList(List<User> users) {
         return userRepository.getUserNotInList(users);
     }
+    @Override
+    public List<User> getAll() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    public User update(User user) {
+        return userRepository.save(user);
+    }
+
 }

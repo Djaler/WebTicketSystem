@@ -15,4 +15,6 @@ public interface UserService {
     User getByLogin(String login);
 
     List<User> getUsersNotInList(List<User> users);
+    List<User> getAll();
+    User update(User user);
 }
