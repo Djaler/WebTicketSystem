@@ -49,6 +49,10 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public List<User> getUsersNotInList(List<User> users) {
+        return userRepository.getUserNotInList(users);
+    }
+    @Override
     public List<User> getAll() {
         return userRepository.findAll();
     }

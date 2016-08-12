@@ -13,6 +13,8 @@ public interface UserService {
     User registrationNewUser(String login, String pass, String name, Role role) throws UserAlreadyExists;
     User registrationNewUser(User user) throws UserAlreadyExists;
     User getByLogin(String login);
+
+    List<User> getUsersNotInList(List<User> users);
     List<User> getAll();
     User update(User user);
 }
