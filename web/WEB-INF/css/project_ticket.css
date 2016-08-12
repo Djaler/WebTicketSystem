@@ -6,6 +6,7 @@
 }
 .project_list {
     margin-top: 10vh;
+    position: fixed;
     min-height: 81.5vh;
     max-height: 81.5vh;
     overflow-y: auto;
@@ -19,3 +20,13 @@
 textarea.textarea-ticket-desc {
     height: 200px;
 }
+
+/*tr#header {
+    display: block;
+    width: 80ch;
+}
+td {
+    position: relative;
+    top: 25px;
+    display: inline-block;
+}*/
