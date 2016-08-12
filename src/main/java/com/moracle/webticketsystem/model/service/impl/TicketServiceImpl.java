@@ -1,6 +1,8 @@
 package com.moracle.webticketsystem.model.service.impl;
 
+import com.moracle.webticketsystem.model.entity.Priority;
 import com.moracle.webticketsystem.model.entity.Project;
+import com.moracle.webticketsystem.model.entity.Status;
 import com.moracle.webticketsystem.model.entity.Ticket;
 import com.moracle.webticketsystem.model.repository.TicketRepository;
 import com.moracle.webticketsystem.model.service.TicketService;
@@ -9,6 +11,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.Predicate;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -44,7 +48,28 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
+    public List<Ticket> getByProjectWithFilter(Project project, Status status, Priority priority) {
+        return ticketRepository.findAll((root, criteriaQuery, criteriaBuilder) -> {
+            List<Predicate> predicates = new ArrayList<>(5);
+            predicates.add(criteriaBuilder.equal(root.get("project"), project));
+            if (status != null) {
+                predicates.add(criteriaBuilder.equal(root.get("status"), status));
+            }
+            if (priority != null) {
+                predicates.add(criteriaBuilder.equal(root.get("priority"), priority));
+            }
+            Predicate[] p = new Predicate[predicates.size()];
+            for (int i = 0; i < predicates.size(); i++) {
+                p[i] = predicates.get(i);
+            }
+            return criteriaBuilder.and(p);
+        }, new Sort(Sort.Direction.ASC, "datetime"));
+    }
+
+    @Override
     public int countByProject(Project project) {
         return ticketRepository.countByProject(project);
     }
+
+
 }

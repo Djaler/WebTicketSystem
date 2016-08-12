@@ -1,0 +1,8 @@
+<tr th:fragment="ticketTableRow" class="rowTicket" th:onclick="'javascript:rowClicked(\'' + ${ticket.id} + '\');'"
+    th:each="ticket: ${tickets}" xmlns:th="http://www.w3.org/1999/xhtml">
+    <td th:text="${ticket.subject}"/>
+    <td th:text="${ticket.datetimeAsString()}"/>
+    <td th:text="#{${'label.priority.'+ticket.priority.priority.toLowerCase()}}"/>
+    <td th:text="#{${'label.status.'+ticket.status.status.toLowerCase().replace(' ','_')}}"/>
+    <td th:text="${ticket.assignee != null ? ticket.assignee.name : ''}"/>
+</tr>

@@ -1,11 +1,9 @@
 package com.moracle.webticketsystem.controller;
 
 import com.moracle.webticketsystem.model.TicketInfo;
-import com.moracle.webticketsystem.model.entity.Attachment;
-import com.moracle.webticketsystem.model.entity.Project;
-import com.moracle.webticketsystem.model.entity.Ticket;
-import com.moracle.webticketsystem.model.entity.User;
+import com.moracle.webticketsystem.model.entity.*;
 import com.moracle.webticketsystem.model.enums.PriorityEnum;
+import com.moracle.webticketsystem.model.enums.StatusEnum;
 import com.moracle.webticketsystem.model.service.AttachmentService;
 import com.moracle.webticketsystem.model.service.ProjectService;
 import com.moracle.webticketsystem.model.service.TicketService;
@@ -116,4 +114,17 @@ public class ProjectTicketController {
         return ticketInfos;
     }
 
+    @RequestMapping(value = "project/{id}/filter", method = RequestMethod.POST)
+    public String doFilter(@PathVariable int id, @ModelAttribute("filterInfo") TicketInfo filterInfo, Model model) {
+        Status status = "empty".equals(filterInfo.getStatus()) == false ?
+                new Status(StatusEnum.toEnum(filterInfo.getStatus()).toID(), filterInfo.getStatus()) :
+                null;
+        Priority priority = "empty".equals(filterInfo.getPriority()) == false ?
+                new Priority(PriorityEnum.toEnum(filterInfo.getPriority()).toID(), filterInfo.getPriority()) :
+                null;
+
+        List<Ticket> tickets = ticketService.getByProjectWithFilter(projectService.getById(id), status, priority);
+        model.addAttribute("tickets", tickets);
+        return "fragments/ticketTableRow";
+    }
 }

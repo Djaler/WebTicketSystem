@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
 <head th:replace="fragments/head :: head(~{::title},~{::link}, ~{::script})">
-    <title th:text="#{ticketsPage.title}">Tickets</title>
+    <title th:text="#{ticketsPage.title}">Tickets</title>=
     <link th:href="@{/css/project_ticket.css}" rel="stylesheet" type="text/css"/>
+
+
     <script th:src="@{/js/common_func.js}"></script>
     <script th:src="@{/js/project_ticket.js}"></script>
     <script type="text/javascript">
@@ -60,13 +62,13 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-2 col-lg-2">
-            <div class="project_list list-group">
+        <div class="col-xs-12 col-md-2 col-lg-2">
+            <div class="affix list-group">
                 <a th:href="@{${'/project/'+project.id}}" class="list-group-item"
                    th:each="project: ${projects}" th:text="${project.name}"/>
             </div>
         </div>
-        <div class="col-md-10 col-lg-10">
+        <div class="tickets-area col-md-9 col-lg-9">
             <div>
                 <!--TODO: Вынести стили в цсс файл-->
                 <h3 style="font-size: 26px; font-weight: bold;" th:text="${selectedProject.name}"></h3>
@@ -89,13 +91,7 @@
                             <th th:text="#{label.ticket.status}"/>
                             <th th:text="#{label.ticket.assignee}"/>
                         </tr>
-                        <tr class="rowTicket" th:onclick="'javascript:rowClicked(\'' + ${ticket.id} + '\');'" th:each="ticket: ${tickets}">
-                            <td th:text="${ticket.subject}"/>
-                            <td th:text="${ticket.datetimeAsString()}"/>
-                            <td th:text="#{${'label.priority.'+ticket.priority.priority.toLowerCase()}}"/>
-                            <td th:text="#{${'label.status.'+ticket.status.status.toLowerCase().replace(' ','_')}}"/>
-                            <td th:text="${ticket.assignee != null ? ticket.assignee.name : ''}"/>
-                        </tr>
+                    <tr th:replace="fragments/ticketTableRow :: ticketTableRow"></tr>
                 </table>
             <ul class="pager">
                 <li id="prevItem"><button disabled="disabled" class="btn btn-default" th:onclick="${'changePage('+(currentpage1)+')'}" id="prevBtn" th:text="#{button.page.prev}"></button></li>

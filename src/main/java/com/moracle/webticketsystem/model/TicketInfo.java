@@ -13,6 +13,7 @@ public class TicketInfo {
     private String priority;
     private String dateAsString;
     private String assigneeName;
+    private String datetime;
 
     public TicketInfo(Ticket ticket) {
         this.id = ticket.getId();
@@ -87,5 +88,13 @@ public class TicketInfo {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getDatetime() {
+        return datetime;
+    }
+
+    public void setDatetime(String datetime) {
+        this.datetime = datetime;
     }
 }
