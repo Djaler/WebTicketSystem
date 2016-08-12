@@ -2,14 +2,74 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
 <head th:replace="fragments/head :: head(~{::title},~{::link}, ~{::script})">
     <title th:text="#{label.admin.projects}"></title>
+    <link th:href="@{/css/admin_projects.css}" rel="stylesheet" type="text/css"/>
+    <script th:src="@{/js/admin_projects.js}"></script>
 </head>
 <body>
 <header th:replace="fragments/header :: header"></header>
 
-<div class="container">
+<div class="container-fluid">
     <div class="row">
-        <div class="col-xs-4 col-xs-offset-4">
-            Тут будет админка
+        <div class="col-md-3">
+            <div class="project_list list-group">
+                <a th:href="@{${'/admin/project/'+project.id}}" class="list-group-item"
+                   th:each="project: ${projects}" th:text="${project.name}"></a>
+            </div>
+        </div>
+        <div class="dual-list list-left col-md-4">
+            <div class="well text-right">
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="input-group">
+                            <span class="input-group-addon glyphicon glyphicon-search"></span>
+                            <input type="text" name="SearchDualList" class="form-control" placeholder="search"/>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="btn-group">
+                            <a class="btn btn-default selector" title="select all"><i
+                                    class="glyphicon glyphicon-unchecked"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <ul class="list-group">
+                    <li class="list-group-item" th:each="user : ${usersInProject}"
+                        th:text="${user.name}"></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="list-arrows col-md-1 text-center">
+            <button class="btn btn-default btn-sm move-left">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            </button>
+
+            <button class="btn btn-default btn-sm move-right">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+            </button>
+        </div>
+
+        <div class="dual-list list-right col-md-4">
+            <div class="well">
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="btn-group">
+                            <a class="btn btn-default selector" title="select all"><i
+                                    class="glyphicon glyphicon-unchecked"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-md-10">
+                        <div class="input-group">
+                            <input type="text" name="SearchDualList" class="form-control" placeholder="search"/>
+                            <span class="input-group-addon glyphicon glyphicon-search"></span>
+                        </div>
+                    </div>
+                </div>
+                <ul class="list-group">
+                    <li class="list-group-item" th:each="user : ${otherUsers}"
+                        th:text="${user.name}"></li>
+                </ul>
+            </div>
         </div>
     </div>
 </div>

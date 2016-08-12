@@ -9,6 +9,8 @@ import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by dmitry on 8/4/2016.
  */
@@ -46,4 +48,8 @@ public class UserServiceImpl implements UserService{
         return userRepository.findByLogin(login);
     }
 
+    @Override
+    public List<User> getUsersNotInList(List<User> users) {
+        return userRepository.getUserNotInList(users);
+    }
 }
