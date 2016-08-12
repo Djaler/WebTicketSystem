@@ -2,6 +2,8 @@ package com.moracle.webticketsystem.model.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * Created by dmitry on 8/10/2016.
@@ -59,5 +61,10 @@ public class Attachment implements Serializable {
 
     public void setSize(int size) {
         this.size = size;
+    }
+
+    public String getName() {
+        Path path = Paths.get(getPath());
+        return path.getName(path.getNameCount() - 1).toString();
     }
 }

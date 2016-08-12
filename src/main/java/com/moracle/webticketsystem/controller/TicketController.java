@@ -5,20 +5,25 @@ import com.moracle.webticketsystem.model.entity.Attachment;
 import com.moracle.webticketsystem.model.entity.Comment;
 import com.moracle.webticketsystem.model.entity.Ticket;
 import com.moracle.webticketsystem.model.entity.User;
+import com.moracle.webticketsystem.model.service.AttachmentService;
 import com.moracle.webticketsystem.model.service.CommentService;
 import com.moracle.webticketsystem.model.service.TicketService;
 import com.moracle.webticketsystem.model.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.security.Principal;
@@ -30,15 +35,20 @@ import java.util.List;
  */
 @Controller
 public class TicketController {
+    private final Environment env;
     private final TicketService ticketService;
     private final CommentService commentService;
     private final UserService userService;
+    private final AttachmentService attachmentService;
 
+    @Inject
     @Autowired
-    public TicketController(TicketService ticketService, CommentService commentService, UserService userService) {
+    public TicketController(TicketService ticketService, CommentService commentService, UserService userService, Environment env, AttachmentService attachmentService) {
         this.ticketService = ticketService;
         this.commentService = commentService;
         this.userService = userService;
+        this.env = env;
+        this.attachmentService = attachmentService;
     }
 
     @RequestMapping(value = "/ticket/{id}", method = RequestMethod.GET)
@@ -53,14 +63,37 @@ public class TicketController {
 
     @ResponseBody
     @RequestMapping(value = "/ticket/{id}", method = RequestMethod.POST)
-    public CommentInfo addComment(@PathVariable String id, @RequestParam(value = "text") String text,
-                                  Principal principal) {
+    public CommentInfo addComment(@PathVariable String id, MultipartHttpServletRequest request,
+                                  Principal principal) throws IOException {
         Ticket ticket = ticketService.getById(Integer.parseInt(id));
 
         User currentUser = userService.getByLogin(principal.getName());
 
+        String text = request.getParameter("text");
+        MultipartFile attachedFile = request.getFile("file");
+
         Comment comment = new Comment(ticket, currentUser, new Date(), text);
+
+        if (!attachedFile.isEmpty()) {
+            Attachment attachment = new Attachment();
+            comment.setAttachment(attachment);
+        }
         commentService.save(comment);
+
+        if (!attachedFile.isEmpty()) {
+            Attachment attachment = comment.getAttachment();
+            String filePath = new String(env.getProperty("attachment.path").getBytes("ISO-8859-1"), "UTF-8")
+                    + "/" + attachment.getId() + "/" + attachedFile.getOriginalFilename();
+            File file = new File(filePath);
+            file.getParentFile().mkdirs();
+            file.createNewFile();
+            try (FileOutputStream fileOutputStream = new FileOutputStream(filePath)) {
+                fileOutputStream.write(attachedFile.getBytes());
+            }
+            attachment.setPath(filePath);
+            attachment.setSize((int) attachedFile.getSize());
+            attachmentService.save(attachment);
+        }
 
         return new CommentInfo(comment);
     }

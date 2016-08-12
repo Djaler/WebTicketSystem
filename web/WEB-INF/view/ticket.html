@@ -2,14 +2,17 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
 <head th:replace="fragments/head :: head(~{::title},~{::link},~{::script})">
     <title th:text="${ticket.subject}">Ticket</title>
+    <script th:src="@{/js/common_func.js}"></script>
 </head>
 <body>
 <header th:replace="fragments/header :: header"></header>
-<div class="container">
+<div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
             <h2>[[${ticket.subject}]]
-                <small th:text="${ticket.project.name}"></small>
+                <a th:href="@{${'/project/'+ticket.project.id}}">
+                    <small th:text="${ticket.project.name}"></small>
+                </a>
             </h2>
             <h3 th:text="${ticket.owner.name+' в '+ticket.datetimeAsString()}">Имя и время</h3>
         </div>
@@ -52,11 +55,19 @@
                class="lead text-justify"></p>
         </div>
     </div>
+    <div class="row" th:if="${ticket.attachment != null}">
+        <div class="col-md-12">
+            <a th:href="@{${'/ticket/'+ticket.id+'/downloadattach'}}" th:text="${ticket.attachment.getName()}"
+               class="btn btn-default"></a>
+        </div>
+    </div>
     <div id="comments">
         <div class="row" th:each="comment : ${comments}">
             <div class="col-md-12">
                 <blockquote class="blockquote">
                     <p class="m-b-0" th:text="${comment.text}"></p>
+                    <a th:if="${comment.attachment != null}" th:href="@{${'/comment/'+comment.id+'/downloadattach'}}"
+                       th:text="${comment.attachment.getName()}" class="btn btn-default"></a>
                     <footer class="blockquote-footer" th:text="${comment.user.name} + ' ' +
                     #{label.comment.at_time} + ' ' + ${comment.datetimeAsString()}"></footer>
                 </blockquote>
@@ -66,12 +77,21 @@
     <div class="row">
         <div class="col-md-12">
             <div class="form-group">
-                <form method="post" role="form">
+                <form method="post" role="form" enctype="multipart/form-data">
                     <label th:text="#{label.comment.add}"></label>
                     <textarea class="form-control comment" th:name="comment"
                               required></textarea>
+                    <label th:text="#{label.attach}"></label>
+                    <div>
+                        <label class="btn btn-default btn-file">
+                            [[#{button.browse}]] <input id="inputFile" name="attachedFile" type="file"
+                                                        style="display: none;">
+                        </label>
+                        <span id="fileNameSpan"></span>
+                    </div>
+                    <p id="fileSizeError" class="text-danger" hidden th:text="#{label.fileSizeError}"></p>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary" th:text="#{label.comment.submit}">
+                        <button type="submit" class="btn btn-primary" th:text="#{label.comment.submit}" id="submit">
                             Submit
                         </button>
                     </div>
@@ -82,32 +102,46 @@
 </div>
 <footer th:replace="fragments/footer :: footer"></footer>
 <script type="text/javascript">
-    $('form').on('submit', function (e) {
+    $('form').submit(function (e) {
         e.preventDefault();
+
+        var formData = new FormData();
+        formData.append('file', $('#inputFile')[0].files[0]);
+        formData.append('text', $('textarea').val());
 
         $.ajax({
             type: 'POST',
-            data: {text: $('textarea').val()},
+            data: formData,
+            processData: false,
+            contentType: false,
             success: function (comment) {
                 var text = comment['text'];
                 var username = comment['username'];
                 var datetime = comment['datetime'];
                 var at = '[[#{label.comment.at_time}]]';
                 var footer = username + ' ' + at + ' ' + datetime;
+
                 $('form').trigger('reset');
 
                 $('#comments').append(
                         '<div class="row">' +
                         '<div class="col-md-12">' +
                         '<blockquote class="blockquote">' +
-                        '<p class="m-b-0">' + text + '</p>' +
-                        '<footer class="blockquote-footer">' + footer + '</footer>' +
+                        '<p class="m-b-0">' + text + '</p>')
+                if (comment['attachName'] != null) {
+                    var href = '[[@{/comment/}]]' + comment['id'] + '/downloadattach';
+                    $('#comments').append('<a class="btn btn-default" href="' + href + '">' +
+                            comment['attachName'] + '</a>')
+                }
+
+                $('#comments').append('<footer class="blockquote-footer">' + footer + '</footer>' +
                         '</blockquote>' +
                         '</div>' +
                         '</div>')
             }
         });
     });
+    bindUploadingFileHandler($('#inputFile'), $('#fileSizeError'), $('#submit'), $('#fileNameSpan'));
 </script>
 </body>
 </html>

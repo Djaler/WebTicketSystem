@@ -90,7 +90,8 @@ public class ProjectTicketController {
         ticketService.save(newTicket);
         if (attachedFile.isEmpty() == false) {
             Attachment attachment = newTicket.getAttachment();
-            String filePath = env.getProperty("attachment.path") + "/" + attachment.getId() + "/" + attachedFile.getOriginalFilename();
+            String filePath = new String(env.getProperty("attachment.path").getBytes("ISO-8859-1"), "UTF-8")
+                    + "/" + attachment.getId() + "/" + attachedFile.getOriginalFilename();
             File file = new File(filePath);
             file.getParentFile().mkdirs();
             file.createNewFile();
