@@ -7,6 +7,7 @@ import com.moracle.webticketsystem.model.entity.Status;
  */
 public interface StatusService {
     Status save(Status status);
-
     void delete(int id);
+
+    Status getByStatus(String status);
 }

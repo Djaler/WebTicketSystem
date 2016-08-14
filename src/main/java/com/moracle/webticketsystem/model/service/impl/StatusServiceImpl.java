@@ -34,6 +34,11 @@ public class StatusServiceImpl implements StatusService {
         statusRepository.delete(id);
     }
 
+    @Override
+    public Status getByStatus(String status) {
+        return statusRepository.findByStatus(status);
+    }
+
     @PostConstruct
     public void init() {
         Map<String, Integer> idMap = new HashMap<>(StatusEnum.getStatuses().length);

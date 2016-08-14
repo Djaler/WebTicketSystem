@@ -7,7 +7,7 @@ import com.moracle.webticketsystem.model.entity.Priority;
  */
 public interface PriorityService {
     Priority save(Priority priority);
-
     void delete(int id);
 
+    Priority getByPriority(String priority);
 }

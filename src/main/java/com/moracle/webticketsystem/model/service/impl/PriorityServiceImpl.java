@@ -34,6 +34,11 @@ public class PriorityServiceImpl implements PriorityService {
         priorityRepository.delete(id);
     }
 
+    @Override
+    public Priority getByPriority(String priority) {
+        return priorityRepository.findByPriority(priority);
+    }
+
     @PostConstruct
     public void init(){
         Map<String, Integer> idMap = new HashMap<>(PriorityEnum.getPriorities().length);

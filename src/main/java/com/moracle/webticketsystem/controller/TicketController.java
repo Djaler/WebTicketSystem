@@ -5,19 +5,13 @@ import com.moracle.webticketsystem.model.entity.Attachment;
 import com.moracle.webticketsystem.model.entity.Comment;
 import com.moracle.webticketsystem.model.entity.Ticket;
 import com.moracle.webticketsystem.model.entity.User;
-import com.moracle.webticketsystem.model.service.AttachmentService;
-import com.moracle.webticketsystem.model.service.CommentService;
-import com.moracle.webticketsystem.model.service.TicketService;
-import com.moracle.webticketsystem.model.service.UserService;
+import com.moracle.webticketsystem.model.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -40,20 +34,26 @@ public class TicketController {
     private final CommentService commentService;
     private final UserService userService;
     private final AttachmentService attachmentService;
+    private final PriorityService priorityService;
+    private final StatusService statusService;
 
     @Inject
     @Autowired
-    public TicketController(TicketService ticketService, CommentService commentService, UserService userService, Environment env, AttachmentService attachmentService) {
+    public TicketController(TicketService ticketService, CommentService commentService, UserService userService,
+                            Environment env, AttachmentService attachmentService, PriorityService priorityService,
+                            StatusService statusService) {
         this.ticketService = ticketService;
         this.commentService = commentService;
         this.userService = userService;
         this.env = env;
         this.attachmentService = attachmentService;
+        this.priorityService = priorityService;
+        this.statusService = statusService;
     }
 
     @RequestMapping(value = "/ticket/{id}", method = RequestMethod.GET)
-    public String tickets(@PathVariable String id, Model model) {
-        Ticket ticket = ticketService.getById(Integer.parseInt(id));
+    public String tickets(@PathVariable int id, Model model) {
+        Ticket ticket = ticketService.getById(id);
         model.addAttribute("ticket", ticket);
 
         List<Comment> commentList = commentService.getByTicket(ticket);
@@ -61,11 +61,33 @@ public class TicketController {
         return "ticket";
     }
 
-    @ResponseBody
     @RequestMapping(value = "/ticket/{id}", method = RequestMethod.POST)
-    public CommentInfo addComment(@PathVariable String id, MultipartHttpServletRequest request,
+    public void changeParam(@PathVariable int id, @RequestParam(value = "parameter") String parameter,
+                            @RequestParam(value = "value") String value) {
+        Ticket ticket = ticketService.getById(id);
+        if (parameter.equals("priority.priority")) {
+            ticket.setPriority(priorityService.getByPriority(value));
+        } else if (parameter.equals("status.status")) {
+            ticket.setStatus(statusService.getByStatus(value));
+        }
+        ticketService.save(ticket);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/ticket/{id}/assign_self", method = RequestMethod.POST)
+    public byte[] assignSelf(@PathVariable int id, Principal principal) {
+        Ticket ticket = ticketService.getById(id);
+        User assignee = userService.getByLogin(principal.getName());
+        ticket.setAssignee(assignee);
+        ticketService.save(ticket);
+        return assignee.getName().getBytes();
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/ticket/{id}/add_comment", method = RequestMethod.POST)
+    public CommentInfo addComment(@PathVariable int id, MultipartHttpServletRequest request,
                                   Principal principal) throws IOException {
-        Ticket ticket = ticketService.getById(Integer.parseInt(id));
+        Ticket ticket = ticketService.getById(id);
 
         User currentUser = userService.getByLogin(principal.getName());
 
@@ -99,14 +121,14 @@ public class TicketController {
     }
 
     @RequestMapping(value = "/comment/{id}/downloadattach", method = RequestMethod.GET)
-    public void downloadCommentAttach(@PathVariable String id, HttpServletResponse response) throws IOException {
-        Comment comment = commentService.getById(Integer.parseInt(id));
+    public void downloadCommentAttach(@PathVariable int id, HttpServletResponse response) throws IOException {
+        Comment comment = commentService.getById(id);
         sendFileToResponse(comment.getAttachment(), response);
     }
 
     @RequestMapping(value = "/ticket/{id}/downloadattach", method = RequestMethod.GET)
-    public void downloadTicketAttach(@PathVariable String id, HttpServletResponse response) throws IOException {
-        Ticket ticket = ticketService.getById(Integer.parseInt(id));
+    public void downloadTicketAttach(@PathVariable int id, HttpServletResponse response) throws IOException {
+        Ticket ticket = ticketService.getById(id);
         sendFileToResponse(ticket.getAttachment(), response);
     }
 
