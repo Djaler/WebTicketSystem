@@ -10,6 +10,7 @@ public class CommentInfo {
     private String text;
     private String username;
     private String attachName;
+    private String attachHref;
     private int id;
 
     public CommentInfo(Comment comment) {
@@ -19,6 +20,7 @@ public class CommentInfo {
         if (comment.getAttachment() != null) {
             setId(comment.getId());
             setAttachName(comment.getAttachment().getName());
+            setAttachHref(comment.getAttachment().getPath());
         }
     }
 
@@ -60,5 +62,13 @@ public class CommentInfo {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getAttachHref() {
+        return attachHref;
+    }
+
+    public void setAttachHref(String attachHref) {
+        this.attachHref = attachHref;
     }
 }

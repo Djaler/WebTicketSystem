@@ -60,7 +60,7 @@
     </div>
     <div class="row" th:if="${ticket.attachment != null}">
         <div class="col-md-12">
-            <a th:href="@{${'/ticket/'+ticket.id+'/downloadattach'}}" th:text="${ticket.attachment.getName()}"
+            <a th:href="@{${ticket.attachment.path}}" th:text="${ticket.attachment.getName()}"
                class="btn btn-default"></a>
         </div>
     </div>
@@ -69,7 +69,7 @@
             <div class="col-md-12">
                 <blockquote class="blockquote">
                     <p class="m-b-0" th:text="${comment.text}"></p>
-                    <a th:if="${comment.attachment != null}" th:href="@{${'/comment/'+comment.id+'/downloadattach'}}"
+                    <a th:if="${comment.attachment != null}" th:href="@{${comment.attachment.path}}"
                        th:text="${comment.attachment.getName()}" class="btn btn-default"></a>
                     <footer class="blockquote-footer" th:text="${comment.user.name} + ' ' +
                     #{label.comment.at_time} + ' ' + ${comment.datetimeAsString()}"></footer>

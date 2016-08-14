@@ -50,7 +50,7 @@ $('form').submit(function (e) {
                 '<blockquote class="blockquote">' +
                 '<p class="m-b-0">' + text + '</p>';
             if (comment['attachName'] != null) {
-                var href = '[[@{/comment/}]]' + comment['id'] + '/downloadattach';
+                var href = comment['attachHref'];
                 code += '<a class="btn btn-default" href="' + href + '">' +
                     comment['attachName'] + '</a>';
             }

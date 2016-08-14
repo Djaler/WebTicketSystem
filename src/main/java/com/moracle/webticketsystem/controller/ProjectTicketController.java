@@ -1,6 +1,7 @@
 package com.moracle.webticketsystem.controller;
 
 import com.moracle.webticketsystem.model.TicketInfo;
+import com.moracle.webticketsystem.model.Utils;
 import com.moracle.webticketsystem.model.entity.*;
 import com.moracle.webticketsystem.model.enums.PriorityEnum;
 import com.moracle.webticketsystem.model.enums.StatusEnum;
@@ -16,8 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.inject.Inject;
-import java.io.File;
-import java.io.FileOutputStream;
+import javax.servlet.ServletContext;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
@@ -34,6 +34,8 @@ public class ProjectTicketController {
     private final ProjectService projectService;
     private final UserService userService;
     private final int ticketsOnPage = 15;
+    @Autowired
+    ServletContext servletContext;
     private AttachmentService attachmentService;
 
     @Autowired
@@ -82,24 +84,11 @@ public class ProjectTicketController {
         Ticket newTicket = new Ticket(user, project, ticketInfo.getSubject(), ticketInfo.getDescription(),
                 PriorityEnum.toEnum(ticketInfo.getPriority()));
         if (attachedFile.isEmpty() == false) {
-            Attachment attachment = new Attachment();
+            Attachment attachment = Utils.createAttachment(servletContext.getRealPath(env.getProperty("attachment.path")),
+                    env.getProperty("attachment.path"), attachedFile);
             newTicket.setAttachment(attachment);
         }
         ticketService.save(newTicket);
-        if (attachedFile.isEmpty() == false) {
-            Attachment attachment = newTicket.getAttachment();
-            String filePath = new String(env.getProperty("attachment.path").getBytes("ISO-8859-1"), "UTF-8")
-                    + "/" + attachment.getId() + "/" + attachedFile.getOriginalFilename();
-            File file = new File(filePath);
-            file.getParentFile().mkdirs();
-            file.createNewFile();
-            try (FileOutputStream fileOutputStream = new FileOutputStream(filePath)) {
-                fileOutputStream.write(attachedFile.getBytes());
-            }
-            attachment.setPath(filePath);
-            attachment.setSize((int) attachedFile.getSize());
-            attachmentService.save(attachment);
-        }
         return "redirect: /project/" + id;
     }
 
