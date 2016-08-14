@@ -74,13 +74,13 @@ public class TicketController {
 
         Comment comment = new Comment(ticket, currentUser, new Date(), text);
 
-        if (!attachedFile.isEmpty()) {
+        if (attachedFile != null) {
             Attachment attachment = new Attachment();
             comment.setAttachment(attachment);
         }
         commentService.save(comment);
 
-        if (!attachedFile.isEmpty()) {
+        if (attachedFile != null) {
             Attachment attachment = comment.getAttachment();
             String filePath = new String(env.getProperty("attachment.path").getBytes("ISO-8859-1"), "UTF-8")
                     + "/" + attachment.getId() + "/" + attachedFile.getOriginalFilename();

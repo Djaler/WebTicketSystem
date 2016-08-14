@@ -123,21 +123,20 @@
 
                 $('form').trigger('reset');
 
-                $('#comments').append(
-                        '<div class="row">' +
+                var code = '<div class="row">' +
                         '<div class="col-md-12">' +
                         '<blockquote class="blockquote">' +
-                        '<p class="m-b-0">' + text + '</p>')
+                        '<p class="m-b-0">' + text + '</p>';
                 if (comment['attachName'] != null) {
                     var href = '[[@{/comment/}]]' + comment['id'] + '/downloadattach';
-                    $('#comments').append('<a class="btn btn-default" href="' + href + '">' +
-                            comment['attachName'] + '</a>')
+                    code += '<a class="btn btn-default" href="' + href + '">' +
+                            comment['attachName'] + '</a>';
                 }
-
-                $('#comments').append('<footer class="blockquote-footer">' + footer + '</footer>' +
+                code += '<footer class="blockquote-footer">' + footer + '</footer>' +
                         '</blockquote>' +
                         '</div>' +
-                        '</div>')
+                        '</div>';
+                $('#comments').append(code);
             }
         });
     });
